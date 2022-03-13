@@ -44,8 +44,9 @@ public class PlayerController : MonoBehaviour
         _rigidbody2D.AddForce(transform.up * jumpForce,ForceMode2D.Impulse);
     }
 
-    private void CheckGound()
+    private void OnCollisionEnter2D(Collision2D col)
     {
-        
+        isJumping = false;
     }
+
 }
