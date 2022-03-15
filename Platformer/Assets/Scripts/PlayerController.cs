@@ -6,9 +6,10 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float speed = 3.0f;
+    [SerializeField] private float maxSpeed = 4.0f;
     [SerializeField] private int lives = 5;
     [SerializeField] private float jumpForce = 5.0f;
-    private bool isJumping = false;
+    private bool isJumping;
 
     private Rigidbody2D _rigidbody2D;
     private Animator _animator;
@@ -19,34 +20,75 @@ public class PlayerController : MonoBehaviour
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
         _sprite = GetComponentInChildren<SpriteRenderer>();
+
+        Application.targetFrameRate = 144;
     }
 
-    private void Update()
+    void FixedUpdate()
     {
         if (Input.GetButton("Horizontal"))
             Run();
+        
         if (Input.GetButton("Vertical") && !isJumping)
         {
             Jump();
-            isJumping = true;
         }
     }
 
     private void Run()
     {
-        Vector3 direction = transform.right * Input.GetAxis("Horizontal");
-        transform.position = Vector3.MoveTowards(transform.position, transform.position + direction, speed * Time.deltaTime);
-        _sprite.flipX = direction.x < 0.0f;
+        float direction = Input.GetAxis("Horizontal");
+        
+        Vector2 velocityRB = _rigidbody2D.velocity;
+        velocityRB.x += direction * speed;
+        velocityRB.x = Math.Abs(velocityRB.x) >= maxSpeed ? maxSpeed * direction : velocityRB.x;
+        
+        _rigidbody2D.velocity = velocityRB;
+        
+        _sprite.flipX = direction < 0.0f;
     }
 
     private void Jump()
     {
-        _rigidbody2D.AddForce(transform.up * jumpForce,ForceMode2D.Impulse);
+        Vector2 velocityRB = _rigidbody2D.velocity;
+        velocityRB.y = jumpForce;
+        
+        _rigidbody2D.velocity = velocityRB;
+        
+        isJumping = true;
     }
 
     private void OnCollisionEnter2D(Collision2D col)
     {
-        isJumping = false;
+        if (col.gameObject.CompareTag("Ground"))
+        {
+            isJumping = false;
+        }
+    }
+    
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.CompareTag("Teleport"))
+        {
+            Portal portal = col.GetComponent<Portal>();
+            if (!portal.Active)
+                return;
+            
+            portal.CharacterTeleported();
+            transform.position = portal.GetPortalPosition();
+            _rigidbody2D.velocity *= Vector2.zero;
+        }
     }
 
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Teleport"))
+        {
+            Portal portal = other.GetComponent<Portal>();
+            if (portal.Active)
+                return;
+            
+            portal.CharacterExit();
+        }
+    }
 }
