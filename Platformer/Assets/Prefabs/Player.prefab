@@ -91,9 +91,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2340360907010534119}
+  - component: {fileID: 2340360907010534117}
+  - component: {fileID: 5382627707349180622}
   - component: {fileID: 7886016264739124831}
   - component: {fileID: 2340360907010534113}
-  - component: {fileID: 2340360907010534117}
+  - component: {fileID: 4260472062625196870}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -116,6 +118,38 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2340360907010534117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2340360907010534114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2ad326831fa5c248ad311f03ab76b63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 120
+  maxSpeed: 8
+  lives: 5
+  jumpForce: 18
+  _rigidbody2D: {fileID: 2340360907010534113}
+  _sprite: {fileID: 2340360905951794118}
+  animatorHelper: {fileID: 5382627707349180622}
+--- !u!114 &5382627707349180622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2340360907010534114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0a51e973374b9f499fa169725699114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterAnimator: {fileID: 4260472062625196870}
 --- !u!70 &7886016264739124831
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -153,19 +187,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &2340360907010534117
-MonoBehaviour:
+--- !u!95 &4260472062625196870
+Animator:
+  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2340360907010534114}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2ad326831fa5c248ad311f03ab76b63, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 120
-  maxSpeed: 8
-  lives: 5
-  jumpForce: 18
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d25bd38ee6474aa4ab52e55c787eb9ac, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

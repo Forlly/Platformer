@@ -8,6 +8,7 @@ public class GameController : MonoBehaviour
     
     void Awake()
     {
+        Application.targetFrameRate = 144;
         StartCoroutine(StartSimulation());
     }
 
