@@ -7,13 +7,14 @@ public class PlayerController : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private float speed = 3.0f;
     [SerializeField] private float maxSpeed = 4.0f;
-    [SerializeField] private int lives = 5;
+    [SerializeField] public int lives = 5;
     [SerializeField] private float jumpForce = 5.0f;
 
     [Header("REFs")][Space]
     [SerializeField] private Rigidbody2D _rigidbody2D;
     [SerializeField] private SpriteRenderer _sprite;
     [SerializeField] private CharacterAnimatorController animatorHelper;
+    public static PlayerController Instance { get; set; }
 
     private bool _activeMovement;
     public bool ActiveMovement
@@ -33,7 +34,12 @@ public class PlayerController : MonoBehaviour
         }
         get => _activeMovement;
     }
-    
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     private bool isJumping;
 
     private void OnEnable()
@@ -109,6 +115,30 @@ public class PlayerController : MonoBehaviour
         {
             animatorHelper.SetAnimationState("Jump", false);
             isJumping = false;
+        }
+
+        else if (col.gameObject.CompareTag("Spike"))
+        {
+            EnemyController spike = col.gameObject.GetComponent<EnemyController>();
+            spike.GetDamageSpike();
+        }
+
+        else if (col.gameObject.CompareTag("Enemy"))
+        {
+            EnemyController enemy = col.gameObject.GetComponent<EnemyController>();
+            Vector2 offset = col.gameObject.GetComponent<Collider2D>().bounds.size;
+            if (transform.position.y > enemy.transform.position.y)
+            {
+                Destroy(enemy.gameObject);
+                Debug.Log( enemy.transform.position.y + offset.y);
+                Debug.Log( transform.position.y);
+            }
+            else
+            {
+                enemy.GetDamageEnemy();
+                Debug.Log( enemy.transform.position.y);
+                Debug.Log( transform.position.y);
+            }
         }
     }
     
