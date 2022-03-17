@@ -2,6 +2,12 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+    [SerializeField] private GameObject topEnemyPos;
+
+    public Vector2 GetTopPos()
+    {
+        return topEnemyPos.transform.position;
+    }
     public void GetDamageSpike()
     {
         PlayerController.Instance.lives--;

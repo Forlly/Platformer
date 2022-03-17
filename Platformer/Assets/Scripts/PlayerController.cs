@@ -9,7 +9,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float maxSpeed = 4.0f;
     [SerializeField] public int lives = 5;
     [SerializeField] private float jumpForce = 5.0f;
-
+    [SerializeField]private GameObject BottomPos;
+    
     [Header("REFs")][Space]
     [SerializeField] private Rigidbody2D _rigidbody2D;
     [SerializeField] private SpriteRenderer _sprite;
@@ -126,18 +127,18 @@ public class PlayerController : MonoBehaviour
         else if (col.gameObject.CompareTag("Enemy"))
         {
             EnemyController enemy = col.gameObject.GetComponent<EnemyController>();
-            Vector2 offset = col.gameObject.GetComponent<Collider2D>().bounds.size;
-            if (transform.position.y > enemy.transform.position.y)
+            //Vector2 offset = col.gameObject.GetComponent<Collider2D>().bounds.size;
+            Debug.Log( enemy.GetTopPos().y);
+            Debug.Log( BottomPos.transform.position.y);
+            if (BottomPos.transform.position.y > enemy.GetTopPos().y)
             {
                 Destroy(enemy.gameObject);
-                Debug.Log( enemy.transform.position.y + offset.y);
-                Debug.Log( transform.position.y);
+                Debug.Log( enemy.GetTopPos().y);
+                Debug.Log( BottomPos.transform.position.y);
             }
             else
             {
                 enemy.GetDamageEnemy();
-                Debug.Log( enemy.transform.position.y);
-                Debug.Log( transform.position.y);
             }
         }
     }
