@@ -133,7 +133,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 120
   maxSpeed: 8
-  lives: 5
+  startingHealth: 5
+  currentHealth: 0
+  totalHealthbar: {fileID: 0}
+  currentHealthbar: {fileID: 0}
   jumpForce: 18
   BottomPos: {fileID: 2495337110428233292}
   _rigidbody2D: {fileID: 2340360907010534113}

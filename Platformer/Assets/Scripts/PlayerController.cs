@@ -1,13 +1,17 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
     [Header("Settings")]
     [SerializeField] private float speed = 3.0f;
     [SerializeField] private float maxSpeed = 4.0f;
-    [SerializeField] public int lives = 5;
+    [SerializeField] public int startingHealth = 5;
+    public int currentHealth;
+    private HealthController healthController;
     [SerializeField] private float jumpForce = 5.0f;
     [SerializeField]private GameObject BottomPos;
     
@@ -39,7 +43,11 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        currentHealth = startingHealth;
+        healthController = FindObjectOfType<HealthController>();
+        healthController.UpdateTotalHealthbar(currentHealth);
     }
+    
 
     private bool isJumping;
 
@@ -122,26 +130,24 @@ public class PlayerController : MonoBehaviour
         {
             EnemyController spike = col.gameObject.GetComponent<EnemyController>();
             spike.GetDamageSpike();
+            healthController.UpdateCurrentHealthbar(currentHealth);
         }
 
         else if (col.gameObject.CompareTag("Enemy"))
         {
             EnemyController enemy = col.gameObject.GetComponent<EnemyController>();
-            //Vector2 offset = col.gameObject.GetComponent<Collider2D>().bounds.size;
-            Debug.Log( enemy.GetTopPos().y);
-            Debug.Log( BottomPos.transform.position.y);
             if (BottomPos.transform.position.y > enemy.GetTopPos().y)
             {
                 Destroy(enemy.gameObject);
-                Debug.Log( enemy.GetTopPos().y);
-                Debug.Log( BottomPos.transform.position.y);
             }
             else
             {
                 enemy.GetDamageEnemy();
+                healthController.UpdateCurrentHealthbar(currentHealth);
             }
         }
     }
+    
     
     private void OnTriggerEnter2D(Collider2D col)
     {
