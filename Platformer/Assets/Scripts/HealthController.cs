@@ -13,7 +13,6 @@ public class HealthController : MonoBehaviour
     public void UpdateCurrentHealthbar(int currentHealth)
     { 
         currentHealthbar.fillAmount = (float)currentHealth/5;
-        Debug.Log(currentHealthbar.fillAmount);
     }
     
 }

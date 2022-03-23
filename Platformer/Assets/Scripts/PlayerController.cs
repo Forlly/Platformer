@@ -11,9 +11,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float maxSpeed = 4.0f;
     [SerializeField] public int startingHealth = 5;
     public int currentHealth;
-    private HealthController healthController;
+    public HealthController healthController;
     [SerializeField] private float jumpForce = 5.0f;
-    [SerializeField]private GameObject BottomPos;
+    [SerializeField] public GameObject BottomPos;
     
     [Header("REFs")][Space]
     [SerializeField] private Rigidbody2D _rigidbody2D;
@@ -118,33 +118,33 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(Jump());
     }
 
+    public void ReceiveDamageFromEnemy(int damage)
+    {
+        currentHealth -= damage;
+        Debug.Log(currentHealth);
+        if(currentHealth<=0)
+            Destroy(gameObject);
+        StartCoroutine(AfterDamage());
+    }
+
+    private IEnumerator AfterDamage()
+    {
+        float step_sec = 0.1f;
+        for (float i = 0; i < 1.2f; i += step_sec)
+        {
+            _sprite.color = new Color(1,1,1,0.3f);
+            yield return new WaitForSeconds(step_sec/2);
+            _sprite.color = new Color(1,1,1,0.6f);
+            yield return new WaitForSeconds(step_sec/2);
+        }
+        _sprite.color = new Color(1,1,1,1);
+    }
     private void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.CompareTag("Ground"))
         {
             animatorHelper.SetAnimationState("Jump", false);
             isJumping = false;
-        }
-
-        else if (col.gameObject.CompareTag("Spike"))
-        {
-            EnemyController spike = col.gameObject.GetComponent<EnemyController>();
-            spike.GetDamageSpike();
-            healthController.UpdateCurrentHealthbar(currentHealth);
-        }
-
-        else if (col.gameObject.CompareTag("Enemy"))
-        {
-            EnemyController enemy = col.gameObject.GetComponent<EnemyController>();
-            if (BottomPos.transform.position.y > enemy.GetTopPos().y)
-            {
-                Destroy(enemy.gameObject);
-            }
-            else
-            {
-                enemy.GetDamageEnemy();
-                healthController.UpdateCurrentHealthbar(currentHealth);
-            }
         }
     }
     

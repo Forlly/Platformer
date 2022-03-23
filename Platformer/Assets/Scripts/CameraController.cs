@@ -15,8 +15,8 @@ public class CameraController : MonoBehaviour
         get => active;
     }
     
-    [SerializeField] private float smoothing = 1.5f;
-    [SerializeField] private Vector2 offset = new Vector2(5f, 2f);
+    [SerializeField] private float smoothing = 2f;
+    [SerializeField] private Vector2 offset = new Vector2(5f, 1f);
     private Transform playerTransform;
     private float lastX;
     private float lastY;

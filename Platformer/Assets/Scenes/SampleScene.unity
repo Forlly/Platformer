@@ -4505,6 +4505,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6859761023895143227, guid: ee531868ebbda4e45b52dc1c37468e74, type: 3}
+      propertyPath: UnitStats
+      value: 
+      objectReference: {fileID: 11400000, guid: cc90c1a2606b60547a000d3600ee7ab0, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee531868ebbda4e45b52dc1c37468e74, type: 3}
 --- !u!1 &1216983973
@@ -6009,6 +6013,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   topEnemyPos: {fileID: 0}
+  damage: 1
+  type: 0
+  UnitStats: {fileID: 0}
 --- !u!1 &1462826675
 GameObject:
   m_ObjectHideFlags: 0
