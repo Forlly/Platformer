@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1028160415288401461}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.045, y: 1.564, z: 0}
+  m_LocalPosition: {x: 0.045, y: 1.535, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1554409541318604988}
@@ -39,7 +39,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1554409541318604988}
-  - component: {fileID: 6525659541377533506}
+  - component: {fileID: 9180839578163176792}
   - component: {fileID: 1554409541318604986}
   - component: {fileID: 1554409541318604987}
   m_Layer: 0
@@ -65,7 +65,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6525659541377533506
+--- !u!114 &9180839578163176792
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -74,10 +74,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1554409541318604990}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e86f35e7740cad244809c1987f9570a6, type: 3}
+  m_Script: {fileID: 11500000, guid: 7097da2ef5e27f049a43d0b04719014f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  topEnemyPos: {fileID: 0}
+  topEnemyPos: {fileID: 1028160415288401461}
+  currentHP: 2
+  damage: 2
+  UnitStats: {fileID: 11400000, guid: c33400a76e9330c41b60af0ab1d9eef7, type: 2}
 --- !u!61 &1554409541318604986
 BoxCollider2D:
   m_ObjectHideFlags: 0
