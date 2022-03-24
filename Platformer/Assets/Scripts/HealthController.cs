@@ -6,13 +6,13 @@ public class HealthController : MonoBehaviour
     [SerializeField] public Image totalHealthbar;
     [SerializeField] public Image currentHealthbar;
 
-    public void UpdateTotalHealthbar(int currentHealth)
+    public void UpdateTotalHealthbar(int currentHealth, int startingHP)
     { 
-        totalHealthbar.fillAmount = currentHealth/5;
+        totalHealthbar.fillAmount = currentHealth/startingHP;
     }
-    public void UpdateCurrentHealthbar(int currentHealth)
+    public void UpdateCurrentHealthbar(int currentHealth, int startingHP)
     { 
-        currentHealthbar.fillAmount = (float)currentHealth/5;
+        currentHealthbar.fillAmount = (float)currentHealth/startingHP;
     }
     
 }

@@ -6,14 +6,18 @@ using UnityEngine;
 public class EnemyQSlikeController : MonoBehaviour, IEnemyController
 {
     [SerializeField] private GameObject topEnemyPos;
-    [SerializeField] private int currentHP = 2;
+    [SerializeField] private int startingHP = 2;
+    [SerializeField] private int currentHP;
+    public EnemyHPController enemyHpController;
+    [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private int damage = 2;
     public UnitStats UnitStats;
-    private SpriteRenderer _spriteRenderer;
 
     private void Awake()
     {
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        enemyHpController = GetComponent<EnemyHPController>();
+        currentHP = startingHP;
     }
 
     private void OnCollisionEnter2D(Collision2D col)
@@ -45,11 +49,15 @@ public class EnemyQSlikeController : MonoBehaviour, IEnemyController
         currentHP -= playerDamage;
         if (currentHP<=0)
             Destroy(gameObject);
+        Debug.Log(currentHP);
+        Debug.Log(startingHP);
+        Debug.Log(enemyHpController);
+        enemyHpController.UpdateSpriteHP(currentHP, startingHP);
     }
     public void MakeDamage(PlayerController player,int _damage)
     {
         player.ReceiveDamageFromEnemy(_damage);
-        player.healthController.UpdateCurrentHealthbar(player.currentHealth);
+        player.healthController.UpdateCurrentHealthbar(player.currentHealth, player.startingHealth);
     }
     
     private IEnumerator AfterDamage()

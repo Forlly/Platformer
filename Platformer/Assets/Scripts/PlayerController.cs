@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
         Instance = this;
         currentHealth = startingHealth;
         healthController = FindObjectOfType<HealthController>();
-        healthController.UpdateTotalHealthbar(currentHealth);
+        healthController.UpdateTotalHealthbar(currentHealth, startingHealth);
     }
     
 

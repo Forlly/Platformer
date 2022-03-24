@@ -18,7 +18,7 @@ public class EnemySpikeController : MonoBehaviour, IEnemyController
     public void MakeDamage(PlayerController player,int _damage)
     {
         player.ReceiveDamageFromEnemy(_damage);
-        player.healthController.UpdateCurrentHealthbar(player.currentHealth);
+        player.healthController.UpdateCurrentHealthbar(player.currentHealth, player.startingHealth);
     }
     
     
