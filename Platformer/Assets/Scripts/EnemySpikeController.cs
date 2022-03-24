@@ -20,4 +20,6 @@ public class EnemySpikeController : MonoBehaviour, IEnemyController
         player.ReceiveDamageFromEnemy(_damage);
         player.healthController.UpdateCurrentHealthbar(player.currentHealth);
     }
+    
+    
 }

@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public int startingHealth = 5;
     public int currentHealth;
     public int damage = 1;
+    private bool _takesDamage = false;
     public HealthController healthController;
     [SerializeField] private float jumpForce = 5.0f;
     [SerializeField] public GameObject BottomPos;
@@ -121,11 +122,15 @@ public class PlayerController : MonoBehaviour
 
     public void ReceiveDamageFromEnemy(int damage)
     {
-        currentHealth -= damage;
-        Debug.Log(currentHealth);
-        if(currentHealth<=0)
-            Destroy(gameObject);
-        StartCoroutine(AfterDamage());
+        if (!_takesDamage)
+        {
+            _takesDamage = true;
+            currentHealth -= damage;
+            Debug.Log(currentHealth);
+            if (currentHealth <= 0)
+                Destroy(gameObject);
+            StartCoroutine(AfterDamage());
+        }
     }
 
     private IEnumerator AfterDamage()
@@ -139,6 +144,7 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForSeconds(step_sec/2);
         }
         _sprite.color = new Color(1,1,1,1);
+        _takesDamage = false;
     }
     private void OnCollisionEnter2D(Collision2D col)
     {
