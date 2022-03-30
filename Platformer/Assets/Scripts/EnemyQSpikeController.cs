@@ -1,9 +1,7 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyQSlikeController : MonoBehaviour, IEnemyController
+public class EnemyQSpikeController : MonoBehaviour, IEnemyController
 {
     [SerializeField] private GameObject topEnemyPos;
     [SerializeField] private int startingHP = 2;
@@ -44,7 +42,7 @@ public class EnemyQSlikeController : MonoBehaviour, IEnemyController
         return topEnemyPos.transform.position;
     }
 
-    private void ReceiveDamage( int playerDamage)
+    public void ReceiveDamage( int playerDamage)
     {
         currentHP -= playerDamage;
         if (currentHP<=0)
@@ -54,6 +52,22 @@ public class EnemyQSlikeController : MonoBehaviour, IEnemyController
         Debug.Log(enemyHpController);
         enemyHpController.UpdateSpriteHP(currentHP, startingHP);
     }
+
+    public Vector2 CheckDistanceToPlayer(Transform player)
+    {
+        Vector2 distance = new Vector2();
+        distance = player.position - transform.position;
+        Debug.Log(distance);
+        return distance;
+    }
+
+    public void FollowToPlayer(Transform player)
+    {
+        transform.position = Vector2.MoveTowards(transform.position, player.position, UnitStats.speed * Time.deltaTime);
+
+    }
+
+
     public void MakeDamage(PlayerController player,int _damage)
     {
         player.ReceiveDamageFromEnemy(_damage);
@@ -65,9 +79,9 @@ public class EnemyQSlikeController : MonoBehaviour, IEnemyController
         float step_sec = 0.1f;
         for (float i = 0; i < 1; i += step_sec)
         {
-            _spriteRenderer.color = new Color(1,0.3f,0.3f,0.3f);
+            _spriteRenderer.color = new Color(1,0.3f,0.3f,0.8f);
             yield return new WaitForSeconds(step_sec/2);
-            _spriteRenderer.color = new Color(1,0.3f,0.3f,0.6f);
+            _spriteRenderer.color = new Color(1,0.3f,0.3f,0.9f);
             yield return new WaitForSeconds(step_sec/2);
         }
         _spriteRenderer.color = new Color(1,1,1,1);

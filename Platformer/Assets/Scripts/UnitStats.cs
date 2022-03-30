@@ -8,6 +8,7 @@ public class UnitStats : ScriptableObject
     public string Description;
     public FractionType FractionType;
     public bool CanReceiveDamage;
+    public float speed;
 }
 public enum FractionType
 {

@@ -126,7 +126,6 @@ public class PlayerController : MonoBehaviour
         {
             _takesDamage = true;
             currentHealth -= damage;
-            Debug.Log(currentHealth);
             if (currentHealth <= 0)
                 Destroy(gameObject);
             StartCoroutine(AfterDamage());
