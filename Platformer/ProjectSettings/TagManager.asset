@@ -8,6 +8,9 @@ TagManager:
   - Ground
   - Teleport
   - Spike
+  - StartPlay
+  - Settings
+  - Exit
   layers:
   - Default
   - TransparentFX
