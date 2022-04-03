@@ -1,14 +1,26 @@
+using System;
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
     private Ray ray;
     private RaycastHit2D hit;
     private Vector2 mousPos;
-
-    private void OnMouseDown()
+    [SerializeField] Button startButton;
+    [SerializeField] Button settingsButton;
+    [SerializeField] Button exitButton;
+    private void Start()
     {
+        startButton.onClick.AddListener(StartPlay);
+        settingsButton.onClick.AddListener(SettingsLoad);
+        exitButton.onClick.AddListener(Exit);
+    }
+
+    /*private void OnMouseDown()
+    {
+        startButton.onClick.AddListener(StartPlay);
         mousPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         ray = new Ray(mousPos, -transform.forward);
         hit = Physics2D.Raycast(mousPos, -transform.forward,10);
@@ -29,7 +41,7 @@ public class MenuManager : MonoBehaviour
         {
             Exit();
         }
-    }
+    }*/
 
     private void StartPlay()
     {
