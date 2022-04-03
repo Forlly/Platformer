@@ -167,7 +167,13 @@ public class PlayerController : MonoBehaviour
             transform.position = portal.GetPortalPosition();
             _rigidbody2D.velocity *= Vector2.zero;
         }
+        else if (col.CompareTag("CheackPoint"))
+        {
+            CheckPoint checkPoint = col.GetComponent<CheckPoint>();
+            checkPoint.SetPlayerPosition();
+        }
     }
+    
 
     private void OnTriggerExit2D(Collider2D other)
     {

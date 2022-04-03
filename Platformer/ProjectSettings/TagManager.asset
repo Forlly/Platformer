@@ -8,9 +8,7 @@ TagManager:
   - Ground
   - Teleport
   - Spike
-  - StartPlay
-  - Settings
-  - Exit
+  - CheackPoint
   layers:
   - Default
   - TransparentFX

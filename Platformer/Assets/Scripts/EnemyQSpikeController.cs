@@ -57,7 +57,6 @@ public class EnemyQSpikeController : MonoBehaviour, IEnemyController
     {
         Vector2 distance = new Vector2();
         distance = player.position - transform.position;
-        Debug.Log(distance);
         return distance;
     }
 

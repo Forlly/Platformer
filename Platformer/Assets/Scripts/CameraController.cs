@@ -24,6 +24,7 @@ public class CameraController : MonoBehaviour
     private bool FindPlayer()
     {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        transform.position = new Vector3(playerTransform.position.x, playerTransform.position.y, -10f);
         return playerTransform != null;
     }
 
@@ -31,6 +32,7 @@ public class CameraController : MonoBehaviour
     {
         lastX = playerTransform.position.x;
         lastY = playerTransform.position.y;
+        Debug.Log(playerTransform.position);
         
         while (active)
         {

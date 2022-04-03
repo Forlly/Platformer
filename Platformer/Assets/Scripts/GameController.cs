@@ -14,8 +14,17 @@ public class GameController : MonoBehaviour
 
     private IEnumerator StartSimulation()
     {
-        _spawner.GenerateMainCharacter();
-        yield return new WaitForSeconds(1);
-        _cameraController.Active = true;
+        if (PlayerPrefs.GetInt("PlayerPosition") == 0)
+        {
+            _spawner.GenerateMainCharacter();
+            yield return new WaitForSeconds(1);
+            _cameraController.Active = true;
+        }
+        else
+        {
+            _spawner.GenerateMainCharacterWithCheackPoint();
+            yield return new WaitForSeconds(1);
+            _cameraController.Active = true;
+        }
     }
 }
