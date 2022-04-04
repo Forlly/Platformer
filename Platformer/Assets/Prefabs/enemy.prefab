@@ -113,10 +113,10 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1000000
+  m_Mass: 100
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 10
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -155,7 +155,7 @@ PolygonCollider2D:
       - {x: -0.7388749, y: 0.39461613}
       - {x: -0.5051176, y: 0.3008347}
       - {x: -0.45653582, y: 0.25560093}
-      - {x: -0.3739872, y: 0.032538414}
+      - {x: -0.39469337, y: 0.018752098}
       - {x: 0.41455466, y: 0.017402053}
       - {x: 0.5223266, y: 0.25878203}
       - {x: 0.7926035, y: 0.43642902}

@@ -23,7 +23,7 @@ public class GameController : MonoBehaviour
         else
         {
             _spawner.GenerateMainCharacterWithCheackPoint();
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(0.1f);
             _cameraController.Active = true;
         }
     }

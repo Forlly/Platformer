@@ -147,7 +147,8 @@ public class PlayerController : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.CompareTag("Ground") || col.gameObject.CompareTag("Enemy"))
+        if ((col.gameObject.CompareTag("Ground") || col.gameObject.CompareTag("Enemy"))
+            && col.otherCollider.gameObject.name == "Foots")
         {
             animatorHelper.SetAnimationState("Jump", false);
             isJumping = false;
