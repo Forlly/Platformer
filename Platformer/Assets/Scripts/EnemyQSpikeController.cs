@@ -10,6 +10,7 @@ public class EnemyQSpikeController : MonoBehaviour, IEnemyController
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private int damage = 2;
     public UnitStats UnitStats;
+    private bool _takeDamage;
 
     private void Awake()
     {
@@ -44,13 +45,16 @@ public class EnemyQSpikeController : MonoBehaviour, IEnemyController
 
     public void ReceiveDamage( int playerDamage)
     {
-        currentHP -= playerDamage;
-        if (currentHP<=0)
-            Destroy(gameObject);
-        Debug.Log(currentHP);
-        Debug.Log(startingHP);
-        Debug.Log(enemyHpController);
-        enemyHpController.UpdateSpriteHP(currentHP, startingHP);
+        if (!_takeDamage)
+        {
+            _takeDamage = true;
+            currentHP -= playerDamage;
+            if (currentHP <= 0)
+                Destroy(gameObject);
+            Debug.Log(startingHP);
+            Debug.Log(currentHP);
+            enemyHpController.UpdateSpriteHP(currentHP, startingHP);
+        }
     }
 
     public Vector2 CheckDistanceToPlayer(Transform player)
@@ -84,5 +88,6 @@ public class EnemyQSpikeController : MonoBehaviour, IEnemyController
             yield return new WaitForSeconds(step_sec/2);
         }
         _spriteRenderer.color = new Color(1,1,1,1);
+        _takeDamage = false;
     }
 }
