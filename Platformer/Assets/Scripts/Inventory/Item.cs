@@ -5,6 +5,14 @@ using UnityEngine;
 [Serializable]
 public class Item : ScriptableObject
 {
+    public Item(Item item)
+    {
+        ID = item.ID;
+        Name = item.Name;
+        ItemRare = item.ItemRare;
+        Sprite = item.Sprite;
+    }
+    
     public int ID;
     public string Name;
     public ItemRare ItemRare;

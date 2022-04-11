@@ -1,24 +1,74 @@
-public class InventorySystem
-{
-    public static int InventorySizeX = 10;
-    public static int InventorySizeY = 4;
+using System;
+using UnityEngine;
 
-   // private InventoryView _inventoryView;
+public class InventorySystem : MonoBehaviour
+{
+    [SerializeField] private int InventorySize = 12;
+    [SerializeField] private InventoryView inventoryView;
     
-    private readonly Item[,] items = new Item[InventorySizeX,InventorySizeY];
-    public bool AddItem(Item item)
+    private Item[] items;
+    private void Awake()
     {
-        for (int i = 0; i < InventorySizeX; i++)
+        Array.Resize(ref items, InventorySize);
+        inventoryView.InitViewSettings(InventorySize);
+    }
+
+    public bool TryAddItem(Item item, int index)
+    {
+        if (index > items.Length - 1)
         {
-            for (int j = 0; j < InventorySizeY; j++)
-            {
-                if (items[i, j] == null)
-                {
-                    items[i, j] = item;
-                    //_inventoryView.slotViews[j].Item = item;
-                    return true;
-                }
-            }
+            return false;
+        }
+        if (items[index] == null)
+        {
+            items[index] = item;
+            inventoryView.SetItem(item, index);
+            return true;
+        }
+
+        return false;
+    }
+    
+    public bool TryAddItem(Item item)
+    {
+        for (int i = 0; i < InventorySize; i++)
+        {
+            if (items[i] != null)
+                continue;
+            
+            items[i] = item;
+            inventoryView.SetItem(item, i);
+            return true;
+        }
+
+        return false;
+    }
+    
+    public bool TryRemoveItem(int index)
+    {
+        if (index > items.Length - 1)
+        {
+            return false;
+        }
+        if (items[index] != null)
+        {
+            items[index] = null;
+            inventoryView.SetItem(null, index);
+            return true;
+        }
+
+        return false;
+    }
+    public bool TryRemoveItem(Item item)
+    {
+        for (int i = 0; i < InventorySize; i++)
+        {
+            if (items[i] != item)
+                continue;
+            
+            items[i] = null;
+            inventoryView.SetItem(null, i);
+            return true;
         }
 
         return false;

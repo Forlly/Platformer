@@ -4,27 +4,29 @@ using System.Linq;
 using UnityEngine;
 public class InventoryView : MonoBehaviour
 {
-    public InventorySystem inventorySystem;
-    //remove it
-    [SerializeField] private Item apple;
-    //
-    [SerializeField] private List<InventorySlotView> slotViews = new List<InventorySlotView>();
-    [SerializeField] private List<SlotBackgroundType> slotBackground = new List<SlotBackgroundType>();
-
-    private void Awake()
-    {
-        inventorySystem = new InventorySystem();
-        slotViews[0].Item = apple;
-        //Debug.Log(inventorySystem.AddItem(apple));
-        //for (int i = 0; i < 2; i++)
-        //{
-        //    Debug.Log(slotViews[i]);
-        //}
-    }
-
+    private readonly List<ItemView> itemViews = new List<ItemView>();
+    [SerializeField] private ItemView itemViewPrefab;
+    [SerializeField] private RectTransform Content;
+    [SerializeField] private List<SlotBackgroundType> slotBackgroundPresets = new List<SlotBackgroundType>();
+    
     public Sprite GetSlotTextureByRare(ItemRare itemRare)
     {
-        return slotBackground.FirstOrDefault(type => type.itemRare == itemRare)?.sprite;
+        return slotBackgroundPresets.FirstOrDefault(type => type.itemRare == itemRare)?.sprite;
+    }
+
+    public void InitViewSettings(int countOfItems)
+    {
+        for (int i = 0; i < countOfItems; i++)
+        {
+            ItemView itemView = Instantiate(itemViewPrefab, Content);
+            itemView.inventoryView = this;
+            itemView.Item = null;
+            itemViews.Add(itemView);
+        }
+    }
+    public void SetItem(Item item, int itemPositionIndex)
+    {
+        itemViews[itemPositionIndex].Item = item;
     }
 }
 

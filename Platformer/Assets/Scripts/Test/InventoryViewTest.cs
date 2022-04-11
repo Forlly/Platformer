@@ -4,17 +4,18 @@ using UnityEngine;
 
 public class InventoryViewTest : MonoBehaviour
 {
-    private readonly InventoryTest _inventoryTest = new InventoryTest();
+    public InventoryTest _inventoryTest;
     [SerializeField] private RectTransform content;
-    private readonly List<SlotViewTest> _slotsViewTests = new List<SlotViewTest>();
+    private List<SlotViewTest> _slotsViewTests = new List<SlotViewTest>();
     [SerializeField] private GameObject _slotTest;
-    
+
     private void Start()
     {
+        _inventoryTest = gameObject.AddComponent<InventoryTest>();
         for (int i = 0; i < _inventoryTest.countSlots; i++)
         {
-            SlotViewTest slot = Instantiate(_slotTest, content).GetComponent<SlotViewTest>();
-            _slotsViewTests.Add(slot);
+            
+            _slotsViewTests = _inventoryTest.GenerateSlot(_slotTest, content, _slotsViewTests, this);
             slot._inventoryTest = this;
             slot._slotTest = new SlotTest();
             slot._slotTest.AddSlot(i);
