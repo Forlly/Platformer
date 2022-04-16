@@ -21,6 +21,7 @@ public class Item : ScriptableObject
 
 public enum ItemRare
 {
+    none,
     unrare,
     rare,
     uniqe,

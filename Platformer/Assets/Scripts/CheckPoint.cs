@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class CheckPoint : MonoBehaviour
 {
-    private bool activated = false;
+    private bool activated ;
     
+
     /*private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.CompareTag("Player") && !activated)
