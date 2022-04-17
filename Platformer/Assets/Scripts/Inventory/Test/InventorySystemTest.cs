@@ -66,4 +66,17 @@ public class InventorySystemTest : MonoBehaviour
 
         return false;
     }
+    
+    public int GetIdItemView(ItemViewTest itemViewTest)
+    {
+        for (int i = 0; i < _inventoryViewTest.items.Count; i++)
+        {
+            if (itemViewTest == _inventoryViewTest.items[i])
+            {
+                return i;
+            }
+        }
+
+        return -1;
+    }
 }

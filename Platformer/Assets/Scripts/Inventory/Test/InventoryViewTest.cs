@@ -8,7 +8,7 @@ public class InventoryViewTest : MonoBehaviour
     [SerializeField] private RectTransform content;
     [SerializeField] private InventorySystemTest inventory;
     [SerializeField] private ItemViewTest itemView;
-    private List<ItemViewTest> items = new List<ItemViewTest>();
+    public List<ItemViewTest> items = new List<ItemViewTest>();
     [SerializeField] private List<ItemRareSprite> backgraoundsOfRare = new List<ItemRareSprite>();
 
     public void GenerateSlotsView(List<Item> slots)
@@ -20,6 +20,7 @@ public class InventoryViewTest : MonoBehaviour
             items[i].Item = slots[i];
         }
     }
+    
 
     public void UpdateSlotsView(Item slotItm, int id)
     {

@@ -7,7 +7,7 @@ public class TestingInvSystem : MonoBehaviour
 
     void Start()
     {
-        inventorySystem.AddItem(test);
-        inventorySystem.AddItem(test, 3);
+        //inventorySystem.AddItem(test);
+        //inventorySystem.AddItem(test, 3);
     }
 }
