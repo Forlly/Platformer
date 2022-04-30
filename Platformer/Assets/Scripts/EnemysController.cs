@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// \brief Класс контролирующий логику поведения проивников 
+/// </summary>
 public class EnemysController : MonoBehaviour
 {
     private EnemyQSpikeController qSpike;

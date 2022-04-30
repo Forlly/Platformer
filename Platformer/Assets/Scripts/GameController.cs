@@ -1,8 +1,14 @@
 using System.Collections;
 using UnityEngine;
-
+/// <summary>
+/// \brief Класс контроллирующий логику игры
+/// </summary>
 public class GameController : MonoBehaviour
 {
+    /// <summary>
+    /// \param _spawner Объект класса Spawner
+    /// \param _cameraController Объект класса CameraController
+    /// </summary>
     [SerializeField] private Spawner _spawner;
     [SerializeField] private CameraController _cameraController;
     
@@ -11,7 +17,10 @@ public class GameController : MonoBehaviour
         Application.targetFrameRate = 144;
         StartCoroutine(StartSimulation());
     }
-
+/// <summary>
+/// \brief Метод запуска симуляции, генерация персонажа и установление слежения камеры за ним
+/// </summary>
+/// <returns></returns>
     private IEnumerator StartSimulation()
     {
         if (PlayerPrefs.GetInt("PlayerPosition") == 0)

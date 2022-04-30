@@ -1,8 +1,14 @@
 using System.Collections;
 using UnityEngine;
-
+/// <summary>
+/// \brief Класс динамечиского противника
+/// </summary>
 public class EnemyQSpikeController : MonoBehaviour, IEnemyController
 {
+    /// <summary>
+    /// \param startingHP Количество жизней противника
+    /// \param damage Урон который может нанести противник
+    /// </summary>
     [SerializeField] private GameObject topEnemyPos;
     [SerializeField] private int startingHP = 2;
     [SerializeField] private int currentHP;
@@ -26,7 +32,7 @@ public class EnemyQSpikeController : MonoBehaviour, IEnemyController
             PlayerController player = col.gameObject.GetComponent<PlayerController>();
             if (player.BottomPos.transform.position.y > GetTopPos().y)
             {
-                ReceiveDamage(player.damage);
+                ReceiveDamage(player);
                 StartCoroutine(AfterDamage());
             }
             else
@@ -42,13 +48,17 @@ public class EnemyQSpikeController : MonoBehaviour, IEnemyController
     {
         return topEnemyPos.transform.position;
     }
-
-    public void ReceiveDamage( int playerDamage)
+/// <summary>
+/// \brief Метод получения урона от игрока
+/// </summary>
+/// <param name="playerDamage"> Урон нанесенный игроком</param>
+    public void ReceiveDamage( PlayerController player)
     {
         if (!_takeDamage)
         {
             _takeDamage = true;
-            currentHP -= playerDamage;
+            player.hitSound.Play();
+            currentHP -= player.damage;
             if (currentHP <= 0)
                 Destroy(gameObject);
             Debug.Log(startingHP);
@@ -57,20 +67,32 @@ public class EnemyQSpikeController : MonoBehaviour, IEnemyController
         }
     }
 
+/// <summary>
+/// \brief Метод проверки дистанции между игроком и противником
+/// </summary>
+/// <param name="player"> Позиция игрока</param>
+/// <returns></returns>
     public Vector2 CheckDistanceToPlayer(Transform player)
     {
         Vector2 distance = new Vector2();
         distance = player.position - transform.position;
         return distance;
     }
-
+/// <summary>
+/// \brief Метод следования за игроком
+/// </summary>
+/// <param name="player"> Позиция игрока</param>
     public void FollowToPlayer(Transform player)
     {
         transform.position = Vector2.MoveTowards(transform.position, player.position, UnitStats.speed * Time.deltaTime);
 
     }
 
-
+/// <summary>
+/// \brief Метод нанесения урона
+/// </summary>
+/// <param name="player"> Персонаж, которому будет нанесен урон</param>
+/// <param name="_damage"> Количество урона, которое будет нанесено</param>
     public void MakeDamage(PlayerController player,int _damage)
     {
         player.ReceiveDamageFromEnemy(_damage);

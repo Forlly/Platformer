@@ -9,6 +9,7 @@ TagManager:
   - Teleport
   - Spike
   - CheackPoint
+  - Item
   layers:
   - Default
   - TransparentFX

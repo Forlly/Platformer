@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
+/// <summary>
+/// \brief Класс отвечающий за анимацию персонажа
+/// </summary>
 public class CharacterAnimatorController : MonoBehaviour
 {
     [SerializeField] private Animator characterAnimator;
@@ -43,6 +45,11 @@ public class CharacterAnimatorController : MonoBehaviour
         
         characterAnimator.CrossFade(id, 0.0f);
     }
+    /// <summary>
+    /// \brief Метод установки анимации в зависимости от привилегированности
+    /// </summary>
+    /// <param name="id">Id анимации </param>
+    /// <param name="state">Состояние анимации </param>
     public void SetAnimationState(string id, bool state)
     {
         _animationDatas.FirstOrDefault(data => data.id == id)!.state = state;
@@ -58,7 +65,9 @@ public class CharacterAnimatorController : MonoBehaviour
         characterAnimator.CrossFade(highestId, 0.0f);
     }
 }
-
+/// <summary>
+/// \brief Класс определяющий параметры анимации 
+/// </summary>
 public class AnimationData
 {
     public string id;

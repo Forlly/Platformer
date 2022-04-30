@@ -3,13 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+/// <summary>
+/// \brief Класс контроллирующий поведение персонажа
+/// </summary>
 public class PlayerController : MonoBehaviour
 {
+    /// <summary>
+    /// \param speed Скорость 
+    /// \param maxSpeed Максимальная скорость
+    /// \param startingHealth Стартовое здоровье
+    /// \param jumpForce Сила прыжка
+    /// \param _activeMovement Активация передвижения персонажа
+    /// </summary>
     [Header("Settings")]
     [SerializeField] private float speed = 3.0f;
     [SerializeField] private float maxSpeed = 4.0f;
     [SerializeField] public int startingHealth = 5;
+    [SerializeField] public AudioSource hitSound;
     public int currentHealth;
     public int damage = 1;
     private bool _takesDamage = false;
@@ -62,7 +72,10 @@ public class PlayerController : MonoBehaviour
     {
         ActiveMovement = false;
     }
-
+    /// <summary>
+    /// \brief Метод передвижения персонажа по горизонтали (бег)
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator Run()
     {
         while (!Input.GetButton("Horizontal"))
@@ -97,7 +110,10 @@ public class PlayerController : MonoBehaviour
 
         StartCoroutine(Run());
     }
-
+    /// <summary>
+    /// \brief Метод отвечающий за прыжок
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator Jump()
     {
         while (!Input.GetButton("Vertical") || isJumping)
@@ -119,7 +135,10 @@ public class PlayerController : MonoBehaviour
         
         StartCoroutine(Jump());
     }
-
+    /// <summary>
+    /// \brief Метод получения урона от противника
+    /// </summary>
+    /// <param name="damage"> Урон нанесенный противником</param>
     public void ReceiveDamageFromEnemy(int damage)
     {
         if (!_takesDamage)

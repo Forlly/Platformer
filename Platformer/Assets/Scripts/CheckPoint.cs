@@ -2,33 +2,24 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// \brief Класс точки сохранения прогресса 
+/// </summary>
 public class CheckPoint : MonoBehaviour
 {
     private bool activated ;
-    
-
-    /*private void OnTriggerEnter2D(Collider2D col)
-    {
-        if (col.CompareTag("Player") && !activated)
-        {
-            Debug.Log(col.tag);
-            PlayerPrefs.SetInt("PlayerPosition", 1);
-            PlayerPrefs.SetFloat("xPlayerPosition", transform.position.x);
-            PlayerPrefs.SetFloat("yPlayerPosition", transform.position.y);
-            activated = true;
-        }
-    }*/
-
+/// <summary>
+/// \brief Метод сохранения позиции персонажа
+/// </summary>
     public void SetPlayerPosition()
     {
         if(!activated)
         {
-            Debug.Log("col.tag");
             PlayerPrefs.SetInt("PlayerPosition", 1);
             PlayerPrefs.SetFloat("xPlayerPosition", transform.position.x);
             PlayerPrefs.SetFloat("yPlayerPosition", transform.position.y);
             activated = true;
+            Destroy(gameObject);
         }
     }
 
