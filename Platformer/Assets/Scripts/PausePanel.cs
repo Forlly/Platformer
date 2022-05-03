@@ -14,10 +14,13 @@ public class PausePanel : MonoBehaviour
     [SerializeField] private Button pauseButton;
     [SerializeField] private Button continueButton;
     [SerializeField] private GameObject pausePanel;
+    private SaveSystem save;
     private void Start()
     {
-        volumeSlider.value = PlayerPrefs.GetFloat("Volume");
-        toggleMusic.isOn = ConvertPlayerPrefsToBool(PlayerPrefs.GetInt("MusicEnabled"));
+        save = FindObjectOfType<SaveSystem>();
+        volumeSlider.value = save._options.volume;
+        toggleMusic.isOn = save._options.musicEnabled;
+        save.UpdateOptions(save._options);
         ChangeVolume(volumeSlider.value);
         ToggleMusic(toggleMusic.isOn);
         volumeSlider.onValueChanged.AddListener(ChangeVolume);
@@ -34,19 +37,11 @@ public class PausePanel : MonoBehaviour
 
     private void ContinueGame()
     {
-        PlayerPrefs.SetInt("MusicEnabled", ConvertIntToPlayerPrefs(toggleMusic.isOn));
-        PlayerPrefs.SetFloat("Volume", volumeSlider.value);
+        save._options.volume = volumeSlider.value;
+        save._options.musicEnabled = toggleMusic.isOn;
+        save.UpdateOptions(save._options);
         pausePanel.SetActive(false);
         Time.timeScale = 1f;
-    }
-
-    private bool ConvertPlayerPrefsToBool(int musicEnbl)
-    {
-        return musicEnbl != 0;
-    }
-    private int ConvertIntToPlayerPrefs(bool musicEnbl)
-    {
-        return musicEnbl ? 1 : 0;
     }
 
     public void ToggleMusic(bool enabledMusic)

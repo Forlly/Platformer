@@ -218,6 +218,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backgraund: {fileID: 1088192543300045885}
   itemImg: {fileID: 1088192542803609747}
+  deleteButton: {fileID: 3987838288184637693}
 --- !u!61 &4125869404112126027
 BoxCollider2D:
   m_ObjectHideFlags: 0
