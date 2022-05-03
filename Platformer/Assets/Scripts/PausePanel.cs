@@ -14,13 +14,15 @@ public class PausePanel : MonoBehaviour
     [SerializeField] private Button pauseButton;
     [SerializeField] private Button continueButton;
     [SerializeField] private GameObject pausePanel;
-    private SaveSystem save;
+    private OptionsSystem OptionSystem;
+    private Options _options;
     private void Start()
     {
-        save = FindObjectOfType<SaveSystem>();
-        volumeSlider.value = save._options.volume;
-        toggleMusic.isOn = save._options.musicEnabled;
-        save.UpdateOptions(save._options);
+        OptionSystem = FindObjectOfType<OptionsSystem>();
+        _options = OptionSystem.Options;
+        volumeSlider.value = _options.volume;
+        toggleMusic.isOn = _options.musicEnabled;
+        
         ChangeVolume(volumeSlider.value);
         ToggleMusic(toggleMusic.isOn);
         volumeSlider.onValueChanged.AddListener(ChangeVolume);
@@ -37,9 +39,9 @@ public class PausePanel : MonoBehaviour
 
     private void ContinueGame()
     {
-        save._options.volume = volumeSlider.value;
-        save._options.musicEnabled = toggleMusic.isOn;
-        save.UpdateOptions(save._options);
+        _options.volume = volumeSlider.value;
+        _options.musicEnabled = toggleMusic.isOn;
+        OptionSystem.Options = _options;
         pausePanel.SetActive(false);
         Time.timeScale = 1f;
     }

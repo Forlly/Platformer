@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
     public HealthController healthController;
     [SerializeField] private float jumpForce = 5.0f;
     [SerializeField] public GameObject BottomPos;
-    
+
     [Header("REFs")][Space]
     [SerializeField] private Rigidbody2D _rigidbody2D;
     [SerializeField] private SpriteRenderer _sprite;

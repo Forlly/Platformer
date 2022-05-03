@@ -15,14 +15,17 @@ public class EnemyQSpikeController : MonoBehaviour, IEnemyController
     public EnemyHPController enemyHpController;
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private int damage = 2;
+    [SerializeField] private int points = 10;
     public UnitStats UnitStats;
     private bool _takeDamage;
+    private ScoreSystem scoreSystem;
 
     private void Awake()
     {
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         enemyHpController = GetComponent<EnemyHPController>();
-        currentHP = startingHP;
+        currentHP = startingHP; 
+        scoreSystem = FindObjectOfType<ScoreSystem>();
     }
 
     private void OnCollisionEnter2D(Collision2D col)
@@ -58,11 +61,10 @@ public class EnemyQSpikeController : MonoBehaviour, IEnemyController
         {
             _takeDamage = true;
             player.hitSound.Play();
+            scoreSystem.AddPoints(points);
             currentHP -= player.damage;
             if (currentHP <= 0)
                 Destroy(gameObject);
-            Debug.Log(startingHP);
-            Debug.Log(currentHP);
             enemyHpController.UpdateSpriteHP(currentHP, startingHP);
         }
     }
@@ -96,6 +98,7 @@ public class EnemyQSpikeController : MonoBehaviour, IEnemyController
     public void MakeDamage(PlayerController player,int _damage)
     {
         player.ReceiveDamageFromEnemy(_damage);
+        scoreSystem.DeductPoints(points/2);
         player.healthController.UpdateCurrentHealthbar(player.currentHealth, player.startingHealth);
     }
     
