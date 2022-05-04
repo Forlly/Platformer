@@ -41,8 +41,6 @@ public class EnemyQSpikeController : MonoBehaviour, IEnemyController
             else
             {
                 MakeDamage(player, damage);
-                Debug.Log(player.BottomPos.transform.position.y );
-                Debug.Log(topEnemyPos.transform.position.y);
             }
         }
     }
@@ -61,7 +59,7 @@ public class EnemyQSpikeController : MonoBehaviour, IEnemyController
         {
             _takeDamage = true;
             player.hitSound.Play();
-            scoreSystem.AddPoints(points);
+            player.scoreSystem.AddPoints(points);
             currentHP -= player.damage;
             if (currentHP <= 0)
                 Destroy(gameObject);
@@ -98,7 +96,6 @@ public class EnemyQSpikeController : MonoBehaviour, IEnemyController
     public void MakeDamage(PlayerController player,int _damage)
     {
         player.ReceiveDamageFromEnemy(_damage);
-        scoreSystem.DeductPoints(points/2);
         player.healthController.UpdateCurrentHealthbar(player.currentHealth, player.startingHealth);
     }
     

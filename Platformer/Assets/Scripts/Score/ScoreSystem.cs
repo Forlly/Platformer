@@ -6,34 +6,70 @@ using UnityEngine;
 
 public class ScoreSystem : MonoBehaviour
 {
-    [SerializeField] private int score;
     private string path;
     [SerializeField] private string saveFileName = "Progress";
     private SaveSystem _saveSystem;
     [SerializeField] private ScoreView scoreView;
+    private ProgressPlayer progressPlayer;
+
+    public ProgressPlayer ProgressPlayer
+    {
+        get => progressPlayer;
+        set
+        {
+            progressPlayer = value;
+            scoreView.UpdateScore(progressPlayer.score);
+        }
+    }
 
     private void Start()
     {
         path = Path.Combine(Application.dataPath, "Json");
         _saveSystem = FindObjectOfType<SaveSystem>();
+        GetProgress();
+        scoreView.UpdateScore(progressPlayer.score);
+    }
+    private void GetProgress()
+    {
+        CheckDirrectory();
+
+        if (!File.Exists($"{path}/{saveFileName}"))
+        {
+            progressPlayer = new ProgressPlayer();
+            return;
+        }
+
+        progressPlayer = _saveSystem.LoadFile<ProgressPlayer>(path, saveFileName);
+        Debug.Log(progressPlayer.score);
+    }
+    private void CheckDirrectory()
+    {
+        if (string.IsNullOrEmpty(path))
+            path = Path.Combine(Application.dataPath, "Json");
+            
+        if (!Directory.Exists(path))
+            Directory.CreateDirectory(path);
     }
 
     public void AddPoints(int points)
     {
-        score += points;
-        scoreView.UpdateScore(score);
-        _saveSystem.SaveFile(score,path,saveFileName);
+        progressPlayer.score += points;
+        scoreView.UpdateScore(progressPlayer.score);
+        _saveSystem.SaveFile(progressPlayer,path,saveFileName);
+        Debug.Log(progressPlayer.score);
     }
 
     public void DeductPoints(int points)
     {
-        score -= points;
-        scoreView.UpdateScore(score);
-        _saveSystem.SaveFile(score,path,saveFileName);
+        progressPlayer.score -= points;
+        scoreView.UpdateScore(progressPlayer.score);
+        _saveSystem.SaveFile(progressPlayer,path,saveFileName);
+        Debug.Log(progressPlayer.score);
     }
-
-    public int GetScore()
-    {
-        return score;
-    }
+    
+}
+[Serializable]
+public class ProgressPlayer
+{
+    public int score = 0;
 }

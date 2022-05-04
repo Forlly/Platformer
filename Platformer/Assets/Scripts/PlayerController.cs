@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     public int currentHealth;
     public int damage = 1;
     private bool _takesDamage = false;
+    public ScoreSystem scoreSystem;
     public HealthController healthController;
     [SerializeField] private float jumpForce = 5.0f;
     [SerializeField] public GameObject BottomPos;
@@ -58,6 +59,7 @@ public class PlayerController : MonoBehaviour
         currentHealth = startingHealth;
         healthController = FindObjectOfType<HealthController>();
         healthController.UpdateTotalHealthbar(currentHealth, startingHealth);
+        scoreSystem = FindObjectOfType<ScoreSystem>();
     }
     
 
@@ -148,6 +150,7 @@ public class PlayerController : MonoBehaviour
             if (currentHealth <= 0)
                 Destroy(gameObject);
             StartCoroutine(AfterDamage());
+            scoreSystem.DeductPoints(5);
         }
     }
 
