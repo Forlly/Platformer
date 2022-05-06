@@ -18,8 +18,13 @@ public class EnemySpikeController : MonoBehaviour, IEnemyController
         }
     }
 
-    public void ReceiveDamage(PlayerController player)
+    public void ReceiveDamageFromPlayer(PlayerController player)
     {
+    }
+
+    public void ReceiveDamage(int _damage)
+    {
+        
     }
 
     public Vector2 CheckDistanceToPlayer(Transform player)

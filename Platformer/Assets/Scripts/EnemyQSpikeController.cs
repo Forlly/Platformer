@@ -35,7 +35,7 @@ public class EnemyQSpikeController : MonoBehaviour, IEnemyController
             PlayerController player = col.gameObject.GetComponent<PlayerController>();
             if (player.BottomPos.transform.position.y > GetTopPos().y)
             {
-                ReceiveDamage(player);
+                ReceiveDamageFromPlayer(player);
                 StartCoroutine(AfterDamage());
             }
             else
@@ -53,7 +53,7 @@ public class EnemyQSpikeController : MonoBehaviour, IEnemyController
 /// \brief Метод получения урона от игрока
 /// </summary>
 /// <param name="playerDamage"> Урон нанесенный игроком</param>
-    public void ReceiveDamage( PlayerController player)
+    public void ReceiveDamageFromPlayer( PlayerController player)
     {
         if (!_takeDamage)
         {
@@ -66,6 +66,18 @@ public class EnemyQSpikeController : MonoBehaviour, IEnemyController
             enemyHpController.UpdateSpriteHP(currentHP, startingHP);
         }
     }
+public void ReceiveDamage(int _damage)
+{
+    if (!_takeDamage)
+    {
+        _takeDamage = true;
+        currentHP -= _damage;
+        if (currentHP <= 0)
+            Destroy(gameObject);
+        enemyHpController.UpdateSpriteHP(currentHP, startingHP);
+        StartCoroutine(AfterDamage());
+    }
+}
 
 /// <summary>
 /// \brief Метод проверки дистанции между игроком и противником

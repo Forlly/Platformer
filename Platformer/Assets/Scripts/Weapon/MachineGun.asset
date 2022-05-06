@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa77a59c3c74d7b4e81673f9acde5c34, type: 3}
+  m_Name: MachineGun
+  m_EditorClassIdentifier: 
+  Id: 1
+  Name: Machine Gun
+  Sprite: {fileID: 21300000, guid: b3741651b7b04124b84e62791e70dd27, type: 3}
+  Description: Simple Machine Gun
+  Damage: 2
+  WeaponType: 1
+  flyDistance: 7
+  speed: 6
+  Audio: {fileID: 4301961414148710841, guid: 7da59cc36624e3641a4fb46f8d2a5063, type: 3}

@@ -6,7 +6,8 @@ using UnityEngine;
 /// </summary>
 public interface IEnemyController 
 {
-    public void ReceiveDamage(PlayerController player);
+    public void ReceiveDamageFromPlayer(PlayerController player);
+    public void ReceiveDamage(int _damage);
     public Vector2 CheckDistanceToPlayer(Transform player);
     public void FollowToPlayer(Transform player);
     public void MakeDamage(PlayerController playerController,int damage);

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 /// <summary>
@@ -27,6 +28,7 @@ public class PlayerController : MonoBehaviour
     public HealthController healthController;
     [SerializeField] private float jumpForce = 5.0f;
     [SerializeField] public GameObject BottomPos;
+    public float direction;
 
     [Header("REFs")][Space]
     [SerializeField] private Rigidbody2D _rigidbody2D;
@@ -90,7 +92,7 @@ public class PlayerController : MonoBehaviour
         
         while (Input.GetButton("Horizontal"))
         {
-            float direction = Input.GetAxis("Horizontal");
+            direction = Input.GetAxis("Horizontal");
 
             Vector2 velocityRB = _rigidbody2D.velocity;
             velocityRB.x += direction * speed;
@@ -98,7 +100,7 @@ public class PlayerController : MonoBehaviour
 
             _rigidbody2D.velocity = velocityRB;
 
-            _sprite.flipX = direction < 0.0f;
+            transform.rotation = direction < 0.0f ? Quaternion.Euler(0,180,0) : Quaternion.Euler(0,0,0);
 
             animatorHelper.SetAnimationState("Run", true);
             
@@ -111,6 +113,11 @@ public class PlayerController : MonoBehaviour
         animatorHelper.SetAnimationState("Run", false);
 
         StartCoroutine(Run());
+    }
+    
+    public int GetDirection()
+    {
+        return direction >= 0 ? 1 : -1;
     }
     /// <summary>
     /// \brief Метод отвечающий за прыжок
@@ -208,5 +215,12 @@ public class PlayerController : MonoBehaviour
             
             portal.CharacterExit();
         }
+    }
+
+
+    public void PlaySoundAfterMakeDamage(int points)
+    {
+        hitSound.Play();
+        scoreSystem.AddPoints(points);
     }
 }
