@@ -7,6 +7,7 @@ public class Weapon : ScriptableObject
     public string Name;
     public Sprite Sprite;
     public string Description;
+    public TypeOfDamage TypeOfDamage;
     public int Damage;
     public WeaponType WeaponType;
     public float flyDistance;
@@ -19,4 +20,10 @@ public enum WeaponType
     gun,
     machineGun,
     laser
+}
+
+public enum TypeOfDamage
+{
+    coldarms,
+    firearms
 }

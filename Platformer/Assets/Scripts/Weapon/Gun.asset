@@ -16,6 +16,7 @@ MonoBehaviour:
   Name: Gun
   Sprite: {fileID: 21300000, guid: 54a78e829ad2cfc489d5c6c5e75673ce, type: 3}
   Description: simple weapon
+  TypeOfDamage: 1
   Damage: 1
   WeaponType: 0
   flyDistance: 5

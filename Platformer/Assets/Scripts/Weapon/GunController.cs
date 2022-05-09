@@ -1,35 +1,34 @@
-using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class GunController :  MonoBehaviour,IWeaponController
 {
-    [SerializeField] public Weapon _weapon;
-    [SerializeField] private Bullet bullet;
-    [SerializeField] private Transform spawnBulletPos;
+    [SerializeField] public Weapon weapon;
+    public Bullet bullet;
+    public Transform spawnBulletPos;
     private PlayerController _playerController;
-    [SerializeField] public SpriteRenderer weaponImg;
 
-    private void Start()
+    private void SearchPlayerController()
     {
         _playerController = FindObjectOfType<PlayerController>();
     }
 
-    private void Update()
+    public Weapon GetWeapon()
     {
-        if(Input.GetKeyDown(KeyCode.Q))
-        {
-            if (_weapon)
-            {
-                Fire();
-            }
-        }
+        return weapon;
     }
 
-
+    public void SetWeapon(Weapon _weapon)
+    {
+        this.weapon = _weapon;
+        WeaponController weaponController = FindObjectOfType<WeaponController>();
+        bullet = weaponController.bullet;
+        spawnBulletPos = weaponController.spawnBulletPos;
+    }
+    
     public void Fire()
     {
+        SearchPlayerController();
         StartCoroutine(Shot());
     }
 
@@ -38,8 +37,8 @@ public class GunController :  MonoBehaviour,IWeaponController
         Vector3 startPoint = spawnBulletPos.position;
         Bullet _bullet = Instantiate(bullet, startPoint, Quaternion.identity);
         _bullet.GunController = this;
-        float wspeed = _weapon.speed * Time.deltaTime;
-        Vector3 endPoint = startPoint + new Vector3(_playerController.GetDirection(), 0, 0) * _weapon.flyDistance;
+        float wspeed = weapon.speed * Time.deltaTime;
+        Vector3 endPoint = startPoint + new Vector3(_playerController.GetDirection(), 0, 0) * weapon.flyDistance;
         float progressFly = 0f;
         while (_bullet.onFly)
         {
@@ -56,6 +55,6 @@ public class GunController :  MonoBehaviour,IWeaponController
 
     public void MakeDamage( IEnemyController enemyController)
     {
-        enemyController.ReceiveDamage(_weapon.Damage);
+        enemyController.ReceiveDamage(weapon.Damage);
     }
 }

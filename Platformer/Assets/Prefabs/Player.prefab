@@ -370,7 +370,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 465335557918705628}
-  - component: {fileID: 7351433535865762975}
+  - component: {fileID: 4558561374040351334}
   - component: {fileID: 1227798007629542708}
   m_Layer: 0
   m_Name: WeaponImg
@@ -393,7 +393,7 @@ Transform:
   m_Father: {fileID: 8070824317016008213}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7351433535865762975
+--- !u!114 &4558561374040351334
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -402,13 +402,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2837006886070655862}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d2fb1f33b888e043b7920382379f95c, type: 3}
+  m_Script: {fileID: 11500000, guid: f37fa35ef21955043a9f303a91f35ea4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weapon: {fileID: 0}
+  weapon: {fileID: 0}
+  weaponImg: {fileID: 1227798007629542708}
   bullet: {fileID: 2606073545314470678, guid: 6affd8652bd42f249b1c70efdc21d038, type: 3}
   spawnBulletPos: {fileID: 4449106502499489796}
-  weaponImg: {fileID: 1227798007629542708}
 --- !u!212 &1227798007629542708
 SpriteRenderer:
   m_ObjectHideFlags: 0

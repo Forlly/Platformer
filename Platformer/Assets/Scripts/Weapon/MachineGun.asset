@@ -16,6 +16,7 @@ MonoBehaviour:
   Name: Machine Gun
   Sprite: {fileID: 21300000, guid: b3741651b7b04124b84e62791e70dd27, type: 3}
   Description: Simple Machine Gun
+  TypeOfDamage: 1
   Damage: 2
   WeaponType: 1
   flyDistance: 7

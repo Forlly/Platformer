@@ -1,13 +1,11 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PickUpWeapon : MonoBehaviour
 {
     [SerializeField] private Weapon weapon;
     private bool isCollision = false;
-    private GunController _gunController;
+    private WeaponController weaponController;
     private void OnTriggerEnter2D(Collider2D col)
     {
         
@@ -21,8 +19,9 @@ public class PickUpWeapon : MonoBehaviour
     private void TakeWeapon()
     {
         SearchGunController();
-        _gunController._weapon = weapon;
-        _gunController.weaponImg.sprite = weapon.Sprite;
+        weaponController.weapon = weapon;
+        weaponController.weaponImg.sprite = weapon.Sprite;
+        weaponController.ChangeWeapon();
         StartCoroutine(DestroyWeapon());
     }
     IEnumerator DestroyWeapon()
@@ -33,6 +32,6 @@ public class PickUpWeapon : MonoBehaviour
 
     private void SearchGunController()
     {
-        _gunController = FindObjectOfType<GunController>();
+        weaponController = FindObjectOfType<WeaponController>();
     }
 }
