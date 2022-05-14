@@ -11,16 +11,20 @@ public class WeaponController : MonoBehaviour
     
     public void ChangeWeapon()
     {
-        if (weaponController == null)
+        if (weaponController != null)
         {
-            if (weapon.TypeOfDamage == TypeOfDamage.coldarms)
-            {
-                weaponController = gameObject.AddComponent<ColdArmsController>();
-            }
-            else if (weapon.TypeOfDamage == TypeOfDamage.firearms)
-            {
-                weaponController = gameObject.AddComponent<GunController>();
-            }
+            ColdArmsController tempCold = GetComponent<ColdArmsController>();
+            GunController tempGun = GetComponent<GunController>();
+            Destroy(tempCold);
+            Destroy(tempGun);
+        }
+        if (weapon.TypeOfDamage == TypeOfDamage.coldarms)
+        {
+            weaponController = gameObject.AddComponent<ColdArmsController>();
+        }
+        else if (weapon.TypeOfDamage == TypeOfDamage.firearms)
+        {
+            weaponController = gameObject.AddComponent<GunController>();
         }
     }
 
@@ -31,8 +35,11 @@ public class WeaponController : MonoBehaviour
             if (weapon)
             {
                 weaponController.SetWeapon(weapon);
+                Debug.Log(weaponController.GetWeapon().Name);
                 weaponController.Fire();
             }
         }
     }
+
+    
 }

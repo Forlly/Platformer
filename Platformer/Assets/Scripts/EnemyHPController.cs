@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,14 +11,13 @@ public class EnemyHPController : MonoBehaviour
 
     public void UpdateSpriteHP(int _countHP, int _startHP)
     {
-        int difStartCrnt = _startHP - _countHP;
-        for (int i = 0; i < _countHP; i++)
+        float percentCurrentHp = 100f * _countHP / _startHP;
+        float percentSpriteHp = percentCurrentHp * currentHP.Length / 100f;
+        int indexSprite = (int)Math.Floor(percentSpriteHp);
+
+        for (int i = 0; i < currentHP.Length; i++)
         {
-            currentHP[i].enabled = true;
-        }
-        for (int i = _countHP; i < (_countHP + difStartCrnt); i++)
-        {
-            currentHP[i].enabled = false;
+            currentHP[i].enabled = i <= indexSprite;
         }
     }
     

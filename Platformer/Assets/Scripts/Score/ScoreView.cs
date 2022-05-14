@@ -16,7 +16,6 @@ public class ScoreView : MonoBehaviour
     private IEnumerator AfterUpdateScore()
     {
         float step_sec = 0.1f;
-        Debug.Log(expirience.color.ToString());
         expirience.fontSize += 50;
         for (float i = 0; i < 1; i += step_sec)
         {

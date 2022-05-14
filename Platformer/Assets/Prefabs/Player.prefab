@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7272514921803916733}
   - component: {fileID: 7609275562473438418}
   - component: {fileID: 9107677062015241780}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Character
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -146,7 +146,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2340360905951794119}
   - component: {fileID: 2340360905951794118}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -227,7 +227,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2340360907010534119}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -258,7 +258,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2432034796683957520}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: BottomPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -289,7 +289,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4449106502499489796}
   - component: {fileID: 5501453072213133698}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: tunk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -372,7 +372,7 @@ GameObject:
   - component: {fileID: 465335557918705628}
   - component: {fileID: 4558561374040351334}
   - component: {fileID: 1227798007629542708}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: WeaponImg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -387,7 +387,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2837006886070655862}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.381, y: 0.493, z: 0}
+  m_LocalPosition: {x: 0.092, y: 0.54, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8070824317016008213}
@@ -469,7 +469,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8070824317016008213}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Weapon
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -501,7 +501,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1769793699986318709}
   - component: {fileID: 4071231297941726331}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: HitSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -628,7 +628,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5969196117239198095}
   - component: {fileID: 4711338815983319248}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Foots
   m_TagString: Player
   m_Icon: {fileID: 0}
