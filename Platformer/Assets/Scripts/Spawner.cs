@@ -21,8 +21,6 @@ public class Spawner : MonoBehaviour
         Vector2 playerPos =
             new Vector2(PlayerPrefs.GetFloat("xPlayerPosition"), PlayerPrefs.GetFloat("yPlayerPosition"));
         Instantiate(Player, playerPos,quaternion.identity);
-        Debug.Log(playerPos);
-
     }
     
 }

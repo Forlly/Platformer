@@ -17,7 +17,7 @@ public class EnemyHPController : MonoBehaviour
 
         for (int i = 0; i < currentHP.Length; i++)
         {
-            currentHP[i].enabled = i <= indexSprite;
+            currentHP[i].enabled = i < indexSprite;
         }
     }
     

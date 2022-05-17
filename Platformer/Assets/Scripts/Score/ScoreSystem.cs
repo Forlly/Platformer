@@ -56,7 +56,6 @@ public class ScoreSystem : MonoBehaviour
         progressPlayer.score += points;
         scoreView.UpdateScore(progressPlayer.score);
         _saveSystem.SaveFile(progressPlayer,path,saveFileName);
-        Debug.Log(progressPlayer.score);
     }
 
     public void DeductPoints(int points)
@@ -64,7 +63,6 @@ public class ScoreSystem : MonoBehaviour
         progressPlayer.score -= points;
         scoreView.UpdateScore(progressPlayer.score);
         _saveSystem.SaveFile(progressPlayer,path,saveFileName);
-        Debug.Log(progressPlayer.score);
     }
     
 }

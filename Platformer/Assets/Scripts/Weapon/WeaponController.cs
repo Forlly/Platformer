@@ -35,7 +35,6 @@ public class WeaponController : MonoBehaviour
             if (weapon)
             {
                 weaponController.SetWeapon(weapon);
-                Debug.Log(weaponController.GetWeapon().Name);
                 weaponController.Fire();
             }
         }

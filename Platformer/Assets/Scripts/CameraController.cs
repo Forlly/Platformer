@@ -46,7 +46,6 @@ public class CameraController : MonoBehaviour
     {
         lastX = playerTransform.position.x;
         lastY = playerTransform.position.y;
-        Debug.Log(playerTransform.position);
         
         while (active)
         {

@@ -157,7 +157,7 @@ public class PlayerController : MonoBehaviour
             if (currentHealth <= 0)
                 Destroy(gameObject);
             StartCoroutine(AfterDamage());
-            scoreSystem.DeductPoints(5);
+            //scoreSystem.DeductPoints(5);
         }
     }
 
