@@ -1,4 +1,3 @@
-using Unity.Mathematics;
 using UnityEngine;
 /// <summary>
 /// \brief Класс генерирующий персонажа в определенном месте
@@ -11,7 +10,7 @@ public class Spawner : MonoBehaviour
     /// </summary>
     public void GenerateMainCharacter()
     {
-        Instantiate(Player, transform.position,quaternion.identity);
+        Instantiate(Player, transform.position, Quaternion.identity);
     }
     /// <summary>
     /// \brief Метод генерации персонажа в чекпоинте
@@ -20,7 +19,7 @@ public class Spawner : MonoBehaviour
     {
         Vector2 playerPos =
             new Vector2(PlayerPrefs.GetFloat("xPlayerPosition"), PlayerPrefs.GetFloat("yPlayerPosition"));
-        Instantiate(Player, playerPos,quaternion.identity);
+        Instantiate(Player, playerPos,Quaternion.identity);
     }
     
 }
