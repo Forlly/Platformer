@@ -7,24 +7,27 @@ using UnityEngine;
 /// </summary>
 public class EnemysController : MonoBehaviour
 {
-    private EnemyQSpikeController qSpike;
+    [SerializeField] private EnemyQSpikeController[] qSpikes;
     private Transform playerTransform;
     private Vector2 distance;
     [SerializeField] private Vector2 triggerDistance;
 
     private void Start()
     {
-        qSpike = FindObjectOfType<EnemyQSpikeController>();
+        qSpikes = FindObjectsOfType<EnemyQSpikeController>();
         playerTransform = PlayerController.Instance.transform;
     }
 
     void Update()
     {
-        if (qSpike)
+        for (int i = 0; i < qSpikes.Length; i++)
         {
-            distance = qSpike.CheckDistanceToPlayer(playerTransform.transform);
-            if(Mathf.Abs(distance.x) <= Mathf.Abs(triggerDistance.x))
-                qSpike.FollowToPlayer(playerTransform.transform);
+            if (qSpikes[i])
+            {
+                distance = qSpikes[i].CheckDistanceToPlayer(playerTransform.transform);
+                if (Mathf.Abs(distance.x) <= Mathf.Abs(triggerDistance.x))
+                    qSpikes[i].FollowToPlayer(playerTransform.transform);
+            }
         }
     }
 }

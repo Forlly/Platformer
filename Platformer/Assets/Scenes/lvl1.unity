@@ -1049,6 +1049,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b1da10ba1fef6545858fd9cc97eff3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  qSpikes:
+  - {fileID: 0}
+  - {fileID: 0}
   triggerDistance: {x: 5, y: 1}
 --- !u!4 &513681319
 Transform:
