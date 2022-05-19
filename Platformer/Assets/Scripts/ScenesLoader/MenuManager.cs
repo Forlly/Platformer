@@ -45,11 +45,11 @@ public class MenuManager : MonoBehaviour
 
     private void StartPlay()
     {
-        SceneManager.LoadScene("lvl1");
+        SceneTransition.SwitchToScene("lvl1");
     }
     private void SettingsLoad()
     {
-        SceneManager.LoadScene("Settings");
+        SceneTransition.SwitchToScene("Settings");
     }
     private void Exit()
     {
