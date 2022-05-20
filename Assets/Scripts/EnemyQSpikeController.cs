@@ -59,7 +59,7 @@ public class EnemyQSpikeController : MonoBehaviour, IEnemyController
         {
             _takeDamage = true;
             player.hitSound.Play();
-            player.scoreSystem.AddPoints(points);
+            //player.scoreSystem.AddPoints(points);
             currentHP -= player.damage;
             if (currentHP <= 0)
                 Destroy(gameObject);
@@ -72,8 +72,8 @@ public void ReceiveDamage(int _damage)
     {
         _takeDamage = true;
         currentHP -= _damage;
-        PlayerController player = FindObjectOfType<PlayerController>();
-        player.scoreSystem.AddPoints(points);
+        /*PlayerController player = FindObjectOfType<PlayerController>();
+        player.scoreSystem.AddPoints(points);*/
         if (currentHP <= 0)
             Destroy(gameObject);
         enemyHpController.UpdateSpriteHP(currentHP, startingHP);

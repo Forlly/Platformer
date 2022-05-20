@@ -219,6 +219,6 @@ public class PlayerController : MonoBehaviour
     public void PlaySoundAfterMakeDamage(int points)
     {
         hitSound.Play();
-        scoreSystem.AddPoints(points);
+        //scoreSystem.AddPoints(points);
     }
 }
