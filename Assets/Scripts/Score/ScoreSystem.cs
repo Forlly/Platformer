@@ -40,7 +40,6 @@ public class ScoreSystem : MonoBehaviour
         }
 
         progressPlayer = _saveSystem.LoadFile<ProgressPlayer>(path, saveFileName);
-        Debug.Log(progressPlayer.score);
     }
     private void CheckDirrectory()
     {

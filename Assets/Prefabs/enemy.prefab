@@ -100,6 +100,7 @@ MonoBehaviour:
   enemyHpController: {fileID: 0}
   _spriteRenderer: {fileID: 0}
   damage: 2
+  points: 10
   UnitStats: {fileID: 11400000, guid: c33400a76e9330c41b60af0ab1d9eef7, type: 2}
 --- !u!50 &2652481715393492734
 Rigidbody2D:
@@ -308,12 +309,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 9ea72647c24be493ba6f15a9cd2a24ae, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7f3145081a29a604ea06e06c24237c3d, type: 3}
   m_Color: {r: 0.8679245, g: 0.10153075, b: 0.10153075, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2.78, y: 2.39}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -390,12 +391,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 9ea72647c24be493ba6f15a9cd2a24ae, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7f3145081a29a604ea06e06c24237c3d, type: 3}
   m_Color: {r: 0.87058824, g: 0.101960786, b: 0.101960786, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2.78, y: 2.39}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

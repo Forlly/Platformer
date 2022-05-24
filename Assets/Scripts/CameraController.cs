@@ -16,8 +16,9 @@ public class CameraController : MonoBehaviour
         set
         {
             active = value;
-            if (active && FindPlayer())
-                StartCoroutine(CameraFollow());
+            FindPlayer();
+            /*if (active && FindPlayer())
+                StartCoroutine(CameraFollow());*/
         }
         get => active;
     }
@@ -25,11 +26,8 @@ public class CameraController : MonoBehaviour
     /// \param smoothing Плавность следования камеры
     /// \param offset Вектор смещения камеры относительно персонажа
     /// </summary>
-    [SerializeField] private float smoothing = 2f;
-    [SerializeField] private Vector2 offset = new Vector2(5f, 1f);
     private Transform playerTransform;
-    private float lastX;
-    private float lastY;
+
 /// <summary>
 /// \brief Метод поиска персонажа на сцене
 /// </summary>
@@ -39,37 +37,6 @@ public class CameraController : MonoBehaviour
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         cinemachineVirtualCamera = GameObject.FindObjectOfType<CinemachineVirtualCamera>();
         cinemachineVirtualCamera.Follow = playerTransform;
-        transform.position = new Vector3(playerTransform.position.x, playerTransform.position.y, -10f);
         return playerTransform != null;
-    }
-/// <summary>
-/// \brief Метод следования камеры за персонажем
-/// </summary>
-/// <returns></returns>
-    private IEnumerator CameraFollow()
-    {
-        lastX = playerTransform.position.x;
-        lastY = playerTransform.position.y;
-        
-        while (active)
-        {
-            float currentX = playerTransform.position.x;
-            float currentY = playerTransform.position.y;
-            Vector3 target;
-            if (currentX > lastX) 
-                target = new Vector3(playerTransform.position.x + offset.x, playerTransform.position.y , -10f);
-            else if (currentX < lastX)
-                target = new Vector3(playerTransform.position.x - offset.x, playerTransform.position.y , -10f);
-            if (currentY > lastY)
-                target = new Vector3(playerTransform.position.x, playerTransform.position.y + offset.y, -10f);
-            else if (currentY < lastY)
-                target = new Vector3(playerTransform.position.x, playerTransform.position.y - offset.y, -10f);
-            else target = transform.position;
-            lastX = currentX;
-            lastY = currentY;
-            transform.position = Vector3.Lerp(transform.position, target, smoothing * Time.deltaTime);
-            
-            yield return null;
-        }
     }
 }
