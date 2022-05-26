@@ -3,7 +3,13 @@ guid: 845426efe64f21e4fa1e5856fbf23d5a
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - mixer: {fileID: 24300002, guid: 143edb7376933524cb30b4da69f01d6b, type: 2}
+  - volumeSlider: {instanceID: 0}
+  - toggleMusic: {instanceID: 0}
+  - pauseButton: {instanceID: 0}
+  - continueButton: {instanceID: 0}
+  - pausePanel: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

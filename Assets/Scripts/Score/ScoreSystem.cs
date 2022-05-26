@@ -8,7 +8,6 @@ public class ScoreSystem : MonoBehaviour
 {
     private string path;
     [SerializeField] private string saveFileName = "Progress";
-    private SaveSystem _saveSystem;
     [SerializeField] private ScoreView scoreView;
     private ProgressPlayer progressPlayer;
 
@@ -25,7 +24,6 @@ public class ScoreSystem : MonoBehaviour
     private void Start()
     {
         path = Path.Combine(Application.dataPath, "Json");
-        _saveSystem = FindObjectOfType<SaveSystem>();
         GetProgress();
         scoreView.UpdateScore(progressPlayer.score);
     }
@@ -39,7 +37,7 @@ public class ScoreSystem : MonoBehaviour
             return;
         }
 
-        progressPlayer = _saveSystem.LoadFile<ProgressPlayer>(path, saveFileName);
+        progressPlayer = SaveSystem.LoadFile<ProgressPlayer>(path, saveFileName);
     }
     private void CheckDirrectory()
     {
@@ -54,14 +52,14 @@ public class ScoreSystem : MonoBehaviour
     {
         progressPlayer.score += points;
         scoreView.UpdateScore(progressPlayer.score);
-        _saveSystem.SaveFile(progressPlayer,path,saveFileName);
+        SaveSystem.SaveFile(progressPlayer,path,saveFileName);
     }
 
     public void DeductPoints(int points)
     {
         progressPlayer.score -= points;
         scoreView.UpdateScore(progressPlayer.score);
-        _saveSystem.SaveFile(progressPlayer,path,saveFileName);
+        SaveSystem.SaveFile(progressPlayer,path,saveFileName);
     }
     
 }

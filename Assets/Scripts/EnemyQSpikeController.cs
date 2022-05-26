@@ -77,6 +77,8 @@ public void ReceiveDamage(int _damage)
         if (currentHP <= 0)
             Destroy(gameObject);
         enemyHpController.UpdateSpriteHP(currentHP, startingHP);
+        PlayerController player = FindObjectOfType<PlayerController>();
+        player.hitSound.Play();
         StartCoroutine(AfterDamage());
     }
 }

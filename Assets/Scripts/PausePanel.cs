@@ -1,9 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PausePanel : MonoBehaviour
@@ -14,14 +10,14 @@ public class PausePanel : MonoBehaviour
     [SerializeField] private Button pauseButton;
     [SerializeField] private Button continueButton;
     [SerializeField] private GameObject pausePanel;
-    private OptionsSystem OptionSystem;
-    private Options _options;
+    private SettingsSystem _settingSystem;
+    private Settings _settings;
     private void Start()
     {
-        OptionSystem = FindObjectOfType<OptionsSystem>();
-        _options = OptionSystem.Options;
-        volumeSlider.value = _options.volume;
-        toggleMusic.isOn = _options.musicEnabled;
+        _settingSystem = FindObjectOfType<SettingsSystem>();
+        _settings = _settingSystem.Settings;
+        volumeSlider.value = _settings.volume;
+        toggleMusic.isOn = _settings.musicEnabled;
         
         ChangeVolume(volumeSlider.value);
         ToggleMusic(toggleMusic.isOn);
@@ -39,9 +35,9 @@ public class PausePanel : MonoBehaviour
 
     private void ContinueGame()
     {
-        _options.volume = volumeSlider.value;
-        _options.musicEnabled = toggleMusic.isOn;
-        OptionSystem.Options = _options;
+        _settings.volume = volumeSlider.value;
+        _settings.musicEnabled = toggleMusic.isOn;
+        _settingSystem.Settings = _settings;
         pausePanel.SetActive(false);
         Time.timeScale = 1f;
     }
