@@ -8,14 +8,14 @@ using UnityEngine;
 public class EnemysController : MonoBehaviour
 {
     [SerializeField] private EnemyQSpikeController[] qSpikes;
+    [SerializeField] private LinkStore linkStore;
     private Transform playerTransform;
     private Vector2 distance;
     [SerializeField] private Vector2 triggerDistance;
 
     private void Start()
     {
-        qSpikes = FindObjectsOfType<EnemyQSpikeController>();
-        playerTransform = PlayerController.Instance.transform;
+        playerTransform = linkStore.playerLink.transform;
     }
 
     void Update()

@@ -10,11 +10,10 @@ public class PausePanel : MonoBehaviour
     [SerializeField] private Button pauseButton;
     [SerializeField] private Button continueButton;
     [SerializeField] private GameObject pausePanel;
-    private SettingsSystem _settingSystem;
+    [SerializeField] private SettingsSystem _settingSystem;
     private Settings _settings;
     private void Start()
     {
-        _settingSystem = FindObjectOfType<SettingsSystem>();
         _settings = _settingSystem.Settings;
         volumeSlider.value = _settings.volume;
         toggleMusic.isOn = _settings.musicEnabled;

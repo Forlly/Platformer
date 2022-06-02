@@ -18,14 +18,13 @@ public class EnemyQSpikeController : MonoBehaviour, IEnemyController
     [SerializeField] private int points = 10;
     public UnitStats UnitStats;
     private bool _takeDamage;
-    private ScoreSystem scoreSystem;
+    [SerializeField] private LinkStore linkStore;
 
     private void Awake()
     {
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         enemyHpController = GetComponent<EnemyHPController>();
-        currentHP = startingHP; 
-        scoreSystem = FindObjectOfType<ScoreSystem>();
+        currentHP = startingHP;
     }
 
     private void OnCollisionEnter2D(Collision2D col)
@@ -77,8 +76,7 @@ public void ReceiveDamage(int _damage)
         if (currentHP <= 0)
             Destroy(gameObject);
         enemyHpController.UpdateSpriteHP(currentHP, startingHP);
-        PlayerController player = FindObjectOfType<PlayerController>();
-        player.hitSound.Play();
+        linkStore.playerLink.hitSound.Play();
         StartCoroutine(AfterDamage());
     }
 }
@@ -100,7 +98,9 @@ public void ReceiveDamage(int _damage)
 /// <param name="player"> Позиция игрока</param>
     public void FollowToPlayer(Transform player)
     {
-        transform.position = Vector2.MoveTowards(transform.position, player.position, UnitStats.speed * Time.deltaTime);
+        transform.position = 
+            Vector2.MoveTowards(transform.position, player.position, 
+                UnitStats.speed * Time.deltaTime);
 
     }
 

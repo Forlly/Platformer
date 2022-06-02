@@ -5,12 +5,14 @@ using UnityEngine;
 public class Spawner : MonoBehaviour
 {
     [SerializeField] private GameObject Player;
+    [SerializeField] private LinkStore linkStore;
     /// <summary>
     /// \brief Метод генерации персонажа
     /// </summary>
     public void GenerateMainCharacter()
-    {
-        Instantiate(Player, transform.position, Quaternion.identity);
+    {   
+        linkStore.playerLink 
+            = Instantiate(Player, transform.position, Quaternion.identity).GetComponentInChildren<PlayerController>();
     }
     /// <summary>
     /// \brief Метод генерации персонажа в чекпоинте
@@ -19,7 +21,11 @@ public class Spawner : MonoBehaviour
     {
         Vector2 playerPos =
             new Vector2(PlayerPrefs.GetFloat("xPlayerPosition"), PlayerPrefs.GetFloat("yPlayerPosition"));
-        Instantiate(Player, playerPos,Quaternion.identity);
+        Player.GetComponentInChildren<PlayerController>().linkStore = linkStore;
+        linkStore.playerLink 
+            = Instantiate(Player, playerPos,Quaternion.identity).GetComponentInChildren<PlayerController>();
+        
+
     }
     
 }

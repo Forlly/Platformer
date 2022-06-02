@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     private bool _takesDamage = false;
     public ScoreSystem scoreSystem;
     public HealthController healthController;
+    [SerializeField] public LinkStore linkStore;
     [SerializeField] private float jumpForce = 5.0f;
     [SerializeField] public GameObject BottomPos;
     public float direction;
@@ -56,10 +57,9 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        currentHealth = startingHealth;
-        healthController = FindObjectOfType<HealthController>();
+        currentHealth = startingHealth; 
+        healthController = linkStore.HealthController;
         healthController.UpdateTotalHealthbar(currentHealth, startingHealth);
-        scoreSystem = FindObjectOfType<ScoreSystem>();
     }
     
 
@@ -212,6 +212,15 @@ public class PlayerController : MonoBehaviour
                 return;
             
             portal.CharacterExit();
+        }
+    }
+
+    public void Heal(int countHP)
+    {
+        if (currentHealth < startingHealth)
+        {
+            currentHealth += countHP;
+            healthController.UpdateCurrentHealthbar(currentHealth, startingHealth);
         }
     }
 
