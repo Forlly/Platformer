@@ -22,9 +22,7 @@ public class PlayerController : MonoBehaviour
     public int currentHealth;
     public int damage = 1;
     private bool _takesDamage = false;
-    public ScoreSystem scoreSystem;
     public HealthController healthController;
-    [SerializeField] public LinkStore linkStore;
     [SerializeField] private float jumpForce = 5.0f;
     [SerializeField] public GameObject BottomPos;
     public float direction;
@@ -57,8 +55,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        currentHealth = startingHealth; 
-        healthController = linkStore.HealthController;
+        currentHealth = startingHealth;
         healthController.UpdateTotalHealthbar(currentHealth, startingHealth);
     }
     

@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 2652481715393492734}
   - component: {fileID: 419194821029534251}
   m_Layer: 0
-  m_Name: enemy
+  m_Name: enemyBOX
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -102,6 +102,7 @@ MonoBehaviour:
   damage: 2
   points: 10
   UnitStats: {fileID: 11400000, guid: c33400a76e9330c41b60af0ab1d9eef7, type: 2}
+  linkStore: {fileID: 0}
 --- !u!50 &2652481715393492734
 Rigidbody2D:
   serializedVersion: 4

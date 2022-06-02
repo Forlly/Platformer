@@ -9,10 +9,14 @@ public class Spawner : MonoBehaviour
     /// <summary>
     /// \brief Метод генерации персонажа
     /// </summary>
-    public void GenerateMainCharacter()
-    {   
+    public void GenerateMainCharacter(Vector3 transformPos = default)
+    {
+        if (transformPos == default)
+            transformPos = transform.position;
+        
+        Player.GetComponentInChildren<PlayerController>().healthController = linkStore.HealthController;
         linkStore.playerLink 
-            = Instantiate(Player, transform.position, Quaternion.identity).GetComponentInChildren<PlayerController>();
+            = Instantiate(Player, transformPos, Quaternion.identity).GetComponentInChildren<PlayerController>();
     }
     /// <summary>
     /// \brief Метод генерации персонажа в чекпоинте
@@ -21,11 +25,7 @@ public class Spawner : MonoBehaviour
     {
         Vector2 playerPos =
             new Vector2(PlayerPrefs.GetFloat("xPlayerPosition"), PlayerPrefs.GetFloat("yPlayerPosition"));
-        Player.GetComponentInChildren<PlayerController>().linkStore = linkStore;
-        linkStore.playerLink 
-            = Instantiate(Player, playerPos,Quaternion.identity).GetComponentInChildren<PlayerController>();
-        
 
+        GenerateMainCharacter(playerPos);
     }
-    
 }

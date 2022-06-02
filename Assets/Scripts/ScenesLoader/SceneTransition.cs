@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -9,38 +7,61 @@ public class SceneTransition : MonoBehaviour
 {
     [SerializeField] private Text loadingPercent;
     [SerializeField] private Image progressBar;
-    private static SceneTransition instance;
-    private Animator animator;
-    private AsyncOperation loadSceneOperation;
-    private static bool shoudPlayOpeningAnimation = false;
-    void Start()
+    [SerializeField] private Animator animator;
+
+    public static SceneTransition instance;
+    
+    private bool isOnLoad;
+
+    private void Awake()
     {
         instance = this;
-        animator = GetComponent<Animator>();
-        if (shoudPlayOpeningAnimation)
-            animator.SetTrigger("sceneOpening");
+        DontDestroyOnLoad(transform.root.gameObject);
     }
 
-    private void Update()
+    public void SwitchToScene(string sceneName)
     {
-        if (loadSceneOperation != null)
+        if (isOnLoad)
+            return;
+        
+        StartCoroutine(SceneLoading(sceneName));
+    }
+
+    private IEnumerator SceneLoading(string sceneName)
+    {
+        isOnLoad = true;
+        
+        AsyncOperation loadSceneOperation = SceneManager.LoadSceneAsync(sceneName);
+        loadSceneOperation.allowSceneActivation = false;
+        
+        animator.CrossFade("SceneClosing", 0f);
+        float myTime = 0;
+        
+        while (myTime < 0.99f || !loadSceneOperation.isDone)
         {
+            if (myTime < 0.99f)
+            {
+                myTime = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+            }
+            else if (!loadSceneOperation.allowSceneActivation)
+            {
+                loadSceneOperation.allowSceneActivation = true;
+            }
+            
             loadingPercent.text = Mathf.RoundToInt(loadSceneOperation.progress * 100) + "%";
             progressBar.fillAmount = loadSceneOperation.progress;
+
+            yield return null;
         }
+        
+        animator.CrossFade("SceneOpening", 0f);
+        myTime = 0;
+        while (myTime < 0.99f)
+        {
+            myTime = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+            yield return null;
+        }
+        
+        isOnLoad = false;
     }
-
-    public static void SwitchToScene(string sceneName)
-    {
-        instance.animator.SetTrigger("sceneEnding");
-        instance.loadSceneOperation = SceneManager.LoadSceneAsync(sceneName);
-        instance.loadSceneOperation.allowSceneActivation = false;
-    }
-
-    public void OnAnimationOver()
-    {
-        shoudPlayOpeningAnimation = true;
-        loadSceneOperation.allowSceneActivation = true;
-    }
-
 }

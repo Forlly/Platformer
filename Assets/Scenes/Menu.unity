@@ -853,7 +853,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &737776007
 GameObject:
@@ -2084,10 +2084,6 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1267551667}
-    - target: {fileID: 4889401291049593914, guid: b21d8e19831bb35448451ec94aeb92cc, type: 3}
-      propertyPath: m_SortingOrder
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4889401291049593917, guid: b21d8e19831bb35448451ec94aeb92cc, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -2098,7 +2094,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4889401291049593917, guid: b21d8e19831bb35448451ec94aeb92cc, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4889401291049593917, guid: b21d8e19831bb35448451ec94aeb92cc, type: 3}
       propertyPath: m_AnchorMax.x
@@ -2122,18 +2118,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4889401291049593917, guid: b21d8e19831bb35448451ec94aeb92cc, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4889401291049593917, guid: b21d8e19831bb35448451ec94aeb92cc, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4889401291049593917, guid: b21d8e19831bb35448451ec94aeb92cc, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4889401291049593917, guid: b21d8e19831bb35448451ec94aeb92cc, type: 3}
-      propertyPath: m_LocalScale.z
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4889401291049593917, guid: b21d8e19831bb35448451ec94aeb92cc, type: 3}
@@ -2250,7 +2234,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2115218110
 GameObject:
@@ -2378,7 +2362,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2115218113
 MonoBehaviour:
