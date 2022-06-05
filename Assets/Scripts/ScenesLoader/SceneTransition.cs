@@ -30,38 +30,34 @@ public class SceneTransition : MonoBehaviour
     private IEnumerator SceneLoading(string sceneName)
     {
         isOnLoad = true;
+
+        Coroutine animCorotine = StartCoroutine(AnimationPlay("SceneClosing", 0f));
+        yield return animCorotine;
         
         AsyncOperation loadSceneOperation = SceneManager.LoadSceneAsync(sceneName);
-        loadSceneOperation.allowSceneActivation = false;
-        
-        animator.CrossFade("SceneClosing", 0f);
-        float myTime = 0;
-        
-        while (myTime < 0.99f || !loadSceneOperation.isDone)
+        while (!loadSceneOperation.isDone)
         {
-            if (myTime < 0.99f)
-            {
-                myTime = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
-            }
-            else if (!loadSceneOperation.allowSceneActivation)
-            {
-                loadSceneOperation.allowSceneActivation = true;
-            }
-            
             loadingPercent.text = Mathf.RoundToInt(loadSceneOperation.progress * 100) + "%";
             progressBar.fillAmount = loadSceneOperation.progress;
 
             yield return null;
         }
-        
-        animator.CrossFade("SceneOpening", 0f);
-        myTime = 0;
-        while (myTime < 0.99f)
-        {
-            myTime = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
-            yield return null;
-        }
+
+        animCorotine = StartCoroutine(AnimationPlay("SceneOpening", 0f));
+        yield return animCorotine;
         
         isOnLoad = false;
+    }
+
+    private IEnumerator AnimationPlay(string animName, float normalizedTransitionDuration)
+    {
+        animator.CrossFade(animName, normalizedTransitionDuration);
+        float currentAnimTime = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+
+        while (currentAnimTime < 0.9999f)
+        {
+            yield return null;
+            currentAnimTime = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+        }
     }
 }
