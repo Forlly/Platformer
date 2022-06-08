@@ -10746,7 +10746,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 100
   height: 100
-  ChanceToChangeHeight: 0.732
+  startHeight: 10
+  countOfCaves: 2
+  sizesOfCaves: 0500000007000000
+  ChanceToChangeHeight: 0.525
   tilemap: {fileID: 1321171052}
   tilemapBase: {fileID: 11400000, guid: 47894a01a479e6c4bac23e1947ed4d12, type: 2}
 --- !u!4 &1412365725
