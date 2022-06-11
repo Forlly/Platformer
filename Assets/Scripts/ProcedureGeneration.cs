@@ -1,13 +1,17 @@
+using System;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Random = UnityEngine.Random;
 
 public class ProcedureGeneration : MonoBehaviour
 {
     [SerializeField] private int width;
     [SerializeField] private int height;
     [SerializeField] private int startHeight;
-    [SerializeField] private int countOfCaves;
-    [SerializeField] private int[] sizesOfCaves;
+    [SerializeField] private int maxSizeOfCaves;
+    [Space] [Range(0f, 1f)]
+    [SerializeField] private float ChanceToGenerateCave;
+
 
     [Space] [Range(0f, 1f)]
     [SerializeField] private float ChanceToChangeHeight;
@@ -21,8 +25,10 @@ public class ProcedureGeneration : MonoBehaviour
     { 
         map = new int[width, height];
 
-        map = GenerationMap2(startHeight, 2);
-        map = GenerateCaves(countOfCaves,sizesOfCaves);
+        map = GenerationMap(startHeight, 2);
+        float a = Time.realtimeSinceStartup;
+        map = GenerateCaves(ChanceToGenerateCave);
+        Debug.Log((Time.realtimeSinceStartup - a).ToString("F6"));
         UpdateMap(map, tilemap, tilemapBase);
     }
     
@@ -40,7 +46,7 @@ public class ProcedureGeneration : MonoBehaviour
         }
     }
 
-    public int[,] GenerationMap2(int _startHeight, int minCountHeightTiles)
+    public int[,] GenerationMap(int _startHeight, int minCountHeightTiles)
     {
         int currentHeight = _startHeight;
         int countHeightTiles = 0;
@@ -83,13 +89,38 @@ public class ProcedureGeneration : MonoBehaviour
     }
 
 
-    private int[,] GenerateCaves(int _countOfCaves, int[] _sizesOfCaves)
+    private int[,] GenerateCaves(float _chanceToGenerateCave)
     {
-        for (int i = 0; i < _countOfCaves; i++)
+        int countOfCaves = (startHeight * width) / (maxSizeOfCaves * maxSizeOfCaves);
+        for (int i = 0; i < countOfCaves; i++)
         {
-           map = CaveGeneration(_sizesOfCaves[i]);
+            if (Random.Range(0f, 1f) <= _chanceToGenerateCave)
+            {
+                CaveGeneration(Random.Range(1, maxSizeOfCaves));
+            }
+        }
+        
+        return map;
+    }
+
+    private int[,] CaveGeneration2(int reqCaveAmount)
+    {
+        int size;
+        int caveX = Random.Range(1, map.GetUpperBound(0) - 1);
+        int caveY = Random.Range(1, startHeight);
+        
+        while ( map[caveX, caveY + 1 ] != 0 || map[caveX, caveY] != 1)
+        {
+            caveY++;
         }
 
+        map[caveX, caveY] = 0;
+
+        size = Random.Range(1, 3);
+        for (int i = 0; i < Mathf.Ceil(size/2); i++)
+        {
+            
+        }
         return map;
     }
     
@@ -98,24 +129,32 @@ public class ProcedureGeneration : MonoBehaviour
         int caveX = Random.Range(1, map.GetUpperBound(0) - 1);
         int caveY = Random.Range(1, startHeight);
         int caveAmount = 0;
-
-
-        while (map[caveX, caveY] != 1)
+        int countTilesAbouve = 0;
+        int countOfErrors = 0;
+        
+        if (map[caveX, caveY + 1 ] == 0 || map[caveX + 1, caveY] == 0 || map[caveX - 1, caveY] == 0 )
         {
-            caveX = Random.Range(1, map.GetUpperBound(0) - 1);
-            caveY = Random.Range(1, map.GetUpperBound(1) - 1);
+            map[caveX, caveY] = 0;
+        }
+        else
+        {
+            while ( map[caveX, caveY + 1 ] != 0 || map[caveX, caveY] != 1)
+            {
+                caveY++;
+            }
+
+            map[caveX, caveY] = 0;
         }
         
-        map[caveX, caveY] = 0;
 
         while (caveAmount < reqCaveAmount)
         {
             int direction = Random.Range(0, 3);
-            
+
             switch (direction)
             {
                 case 0:
-                    if ((caveY + 1) < (startHeight- 1) && (caveX + 1) < (map.GetUpperBound(0) - 1) 
+                    if ((caveX + 1) < (map.GetUpperBound(0) - 1) 
                                                        &&  map[caveX, caveY + 2] == 1 &&  map[caveX + 1, caveY + 2] == 1)
                     {
                         caveY++;
@@ -124,56 +163,82 @@ public class ProcedureGeneration : MonoBehaviour
                         {
                             map[caveX, caveY] = 0;
                             map[caveX + 1, caveY] = 0;
-                                
+
+                            countTilesAbouve = 0;
                             caveAmount++;
                         }
+                        
+                    }
+                    else
+                    {
+                        countOfErrors++;
                     }
                     break;
                 case 1:
-                    if ((caveY - 1) > 1 && (caveX - 1) > 1 
-                                        &&  map[caveX, caveY - 2] == 1 &&  map[caveX - 1, caveY - 2] == 1)
+                    if ((caveY - 1) > 1 && (caveX - 1) > 1 &&  map[caveX, caveY - 2] == 1 
+                        && map[caveX - 1, caveY - 2] == 1 )
                     {
                         caveY--;
 
-                        if (map[caveX, caveY] == 1 && map[caveX - 1, caveY] == 1)
+                        if (map[caveX, caveY] == 1 && map[caveX - 1, caveY] == 1 && countTilesAbouve < 2)
                         {
+
                             map[caveX, caveY] = 0;
                             map[caveX - 1, caveY] = 0;
 
+                            countTilesAbouve++;
                             caveAmount++;
                         }
+                    }
+                    else
+                    {
+                        countOfErrors++;
                     }
                     break;
                 case 2:
-                    if ((caveX + 1) < (map.GetUpperBound(0) - 1) 
-                        && (caveY + 1) < (startHeight- 1) &&  map[caveX + 2, caveY] == 1 &&  map[caveX + 2, caveY + 1] == 1)
+                    if ((caveX + 1) < (map.GetUpperBound(0) - 1) && (caveY - 1) > 1 
+                         &&  map[caveX + 2, caveY] == 1 &&  map[caveX + 2, caveY - 1] == 1)
                     {
                         caveX++;
-
-                        if (map[caveX, caveY] == 1 && map[caveX, caveY + 1] == 1)
-                        {
-                            map[caveX, caveY] = 0;
-                            map[caveX, caveY + 1] = 0;
-
-                            caveAmount++;
-                        }
-                    }
-                    break;
-                case 3:
-                    if ((caveX - 1) > 1 && (caveY - 1) > 1 
-                                        &&  map[caveX - 2, caveY] == 1 &&  map[caveX - 2, caveY - 1] == 1)
-                    {
-                        caveX--;
 
                         if (map[caveX, caveY] == 1 && map[caveX, caveY - 1] == 1)
                         {
                             map[caveX, caveY] = 0;
                             map[caveX, caveY - 1] = 0;
 
+                            countTilesAbouve = 0;
                             caveAmount++;
                         }
                     }
+                    else
+                    {
+                        countOfErrors++;
+                    }
                     break;
+                case 3:
+                    if ((caveX - 1) > 1
+                                        &&  map[caveX - 2, caveY] == 1 &&  map[caveX - 2, caveY + 1] == 1)
+                    {
+                        caveX--;
+
+                        if (map[caveX, caveY] == 1 && map[caveX, caveY + 1] == 1)
+                        {
+                            map[caveX, caveY] = 0;
+                            map[caveX, caveY + 1] = 0;
+                            
+                            caveAmount++;
+                        }
+                    }
+                    else
+                    {
+                        countOfErrors++;
+                    }
+                    break;
+            }
+
+            if (countOfErrors>10)
+            {
+                 break ;
             }
         }
 
