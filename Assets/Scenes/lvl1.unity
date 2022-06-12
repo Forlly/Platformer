@@ -10744,10 +10744,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 681781ade91ddaa4d8044577d759032e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 10000
+  width: 1000
   height: 100
   startHeight: 10
-  maxSizeOfCaves: 30
+  maxSizeOfCaves: 10
   ChanceToGenerateCave: 0.725
   ChanceToChangeHeight: 0.525
   tilemap: {fileID: 1321171052}
