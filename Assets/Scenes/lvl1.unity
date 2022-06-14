@@ -10744,7 +10744,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 681781ade91ddaa4d8044577d759032e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 1000
+  width: 100
   height: 100
   startHeight: 10
   maxSizeOfCaves: 10
