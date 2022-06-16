@@ -1496,7 +1496,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1462826677}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!483693784 &540598894
 TilemapRenderer:
@@ -1969,7 +1969,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1462826677}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!483693784 &549974097
 TilemapRenderer:
@@ -10211,6 +10211,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawner: {fileID: 412883026}
   _cameraController: {fileID: 519420030}
+  procedureGeneration: {fileID: 1412365724}
+  endOfLvl: {fileID: 7870862983225620226, guid: 24cf652d23a65594d8a496cc5493db4f, type: 3}
 --- !u!4 &1216983975
 Transform:
   m_ObjectHideFlags: 0
@@ -10384,9 +10386,10 @@ GameObject:
   - component: {fileID: 1321171050}
   - component: {fileID: 1321171052}
   - component: {fileID: 1321171051}
+  - component: {fileID: 1321171053}
   m_Layer: 0
   m_Name: TestTilemap
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10493,6 +10496,22 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!19719996 &1321171053
+TilemapCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1321171049}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 1
+  m_Offset: {x: 0, y: 0}
+  m_MaximumTileChangeCount: 1000
+  m_ExtrusionFactor: 0.00001
 --- !u!1 &1327299249
 GameObject:
   m_ObjectHideFlags: 3
@@ -10714,7 +10733,7 @@ GameObject:
   - component: {fileID: 1412365724}
   - component: {fileID: 1412365723}
   m_Layer: 0
-  m_Name: TestMap
+  m_Name: MapProcedureGeneration
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10746,12 +10765,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 100
   height: 100
-  startHeight: 10
+  startHeight: 16
   maxSizeOfCaves: 10
   ChanceToGenerateCave: 0.725
   ChanceToChangeHeight: 0.525
   tilemap: {fileID: 1321171052}
   tilemapBase: {fileID: 11400000, guid: 47894a01a479e6c4bac23e1947ed4d12, type: 2}
+  lvlSettings:
+    mapLvl: []
 --- !u!4 &1412365725
 Transform:
   m_ObjectHideFlags: 0
@@ -10759,14 +10780,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1412365722}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1321171050}
-  m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_Father: {fileID: 1462826677}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1413120601
 GameObject:
@@ -10914,7 +10935,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1462826677}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!483693784 &1434758184
 TilemapRenderer:
@@ -12475,6 +12496,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1412365725}
   - {fileID: 549974096}
   - {fileID: 540598893}
   - {fileID: 1434758183}

@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Random = UnityEngine.Random;
@@ -7,32 +9,139 @@ public class ProcedureGeneration : MonoBehaviour
 {
     [SerializeField] private int width;
     [SerializeField] private int height;
-    [SerializeField] private int startHeight;
+    [SerializeField] public int startHeight;
     [SerializeField] private int maxSizeOfCaves;
     [Space] [Range(0f, 1f)]
-    [SerializeField] private float ChanceToGenerateCave;
+    [SerializeField] public float ChanceToGenerateCave;
 
 
     [Space] [Range(0f, 1f)]
     [SerializeField] private float ChanceToChangeHeight;
     
-    [SerializeField] private Tilemap tilemap;
-    [SerializeField] private TileBase tilemapBase;
+    [SerializeField] public Tilemap tilemap;
+    [SerializeField] public TileBase tilemapBase;
 
-    private int[,] map;
+    public static ProcedureGeneration Instans;
+    public LvlSettings lvlSettings;
+    private string path;
+    private string fileName = "LvlSettings.json";
+    public int[,] map;
     
     void Start()
-    { 
+    {
+        Instans = this;
         map = new int[width, height];
 
-        map = GenerationMap(startHeight, 2);
-        float a = Time.realtimeSinceStartup;
-        map = GenerateCaves(ChanceToGenerateCave);
-        Debug.Log((Time.realtimeSinceStartup - a).ToString("F6"));
-        UpdateMap(map, tilemap, tilemapBase);
+        path = Path.Combine(Application.dataPath, "Json");
+        
+        GetLvlSettings();
+        Debug.Log(lvlSettings.mapLvl);
+        
+        if (lvlSettings.mapLvl == null)
+        {
+            map = GenerationMap(startHeight, 6);
+            float a = Time.realtimeSinceStartup;
+            map = GenerateCaves(ChanceToGenerateCave);
+
+            lvlSettings.mapLvl = Encode(map);
+            Debug.Log(lvlSettings.mapLvl);
+            
+            SaveSystem.SaveFile<LvlSettings>(lvlSettings, path, fileName);
+            Debug.Log((Time.realtimeSinceStartup - a).ToString("F6"));
+        }
+        
+        
+        
+        UpdateMap(Decode(lvlSettings.mapLvl), tilemap, tilemapBase);
     }
     
-    public static void UpdateMap(int[,] map, Tilemap tilemap, TileBase tile)
+    
+    public void GeneratingAllMap()
+    {
+        map = new int[width, height];
+        map = GenerationMap(startHeight, 6);
+        map = GenerateCaves(ChanceToGenerateCave);
+        
+        UpdateMap(map, tilemap, tilemapBase);
+    }
+
+
+    public Vector3 GetExitFromLvl(int[,] _map)
+    {
+        int j = 0;
+
+        while (_map[_map.GetUpperBound(0) - 1,j] == 1 && _map[_map.GetUpperBound(0) - 1,j + 1] == 1)
+        {
+            j++;
+        }
+        
+        Debug.Log(_map[_map.GetUpperBound(0) - 1,j]);
+        Debug.Log(_map[_map.GetUpperBound(0) - 1,j + 1]);
+
+        Debug.Log(tilemap.GetCellCenterLocal(new Vector3Int(_map.GetUpperBound(0) - 1, j, 0)));
+        return tilemap.GetCellCenterLocal(new Vector3Int(_map.GetUpperBound(0) - 1, j, 0));
+    }
+
+    private List<SecondList> Encode(int[,] array)
+    {
+        List<SecondList>  tempList = new List<SecondList>();
+
+        for (int i = 0; i < array.GetUpperBound(0); i++)
+        {
+            SecondList tmp = new SecondList();
+            tmp.mapList = new List<int>();
+                
+            for (int j = 0; j < array.GetUpperBound(1); j++)
+            {
+                tmp.mapList.Add(array[i, j]);
+
+            }
+                
+            tempList.Add(tmp);
+        }
+
+        return tempList;
+    }
+    
+    public int[,] Decode( List<SecondList> tempList)
+    {
+        int[,] temp = new int[ tempList.Count, tempList[0].mapList.Count];
+        
+        for (int i = 0; i < temp.GetUpperBound(0); i++)
+        {
+            for (int j = 0; j < temp.GetUpperBound(1); j++)
+            {
+                temp[i,j] = tempList[i].mapList[j];
+            }
+        }
+        
+        return temp;
+    }
+    
+    private void CheckDirrectory()
+    {
+        if (string.IsNullOrEmpty(path))
+            path = Path.Combine(Application.dataPath, "Json");
+            
+        if (!Directory.Exists(path))
+            Directory.CreateDirectory(path);
+    }
+    
+    
+    private void GetLvlSettings()
+    {
+        CheckDirrectory();
+
+        if (!File.Exists($"{path}/{fileName}"))
+        {
+            lvlSettings = new LvlSettings();
+            return;
+        }
+
+        lvlSettings =  SaveSystem.LoadFile<LvlSettings>(path, fileName);
+    }
+    
+    public void UpdateMap(int[,] map, Tilemap tilemap, TileBase tile)
     {
         for (int i = 0; i < map.GetUpperBound(0); i++)
         {
@@ -46,7 +155,7 @@ public class ProcedureGeneration : MonoBehaviour
         }
     }
 
-    public int[,] GenerationMap(int _startHeight, int minCountHeightTiles)
+        public int[,] GenerationMap(int _startHeight, int minCountHeightTiles)
     {
         int currentHeight = _startHeight;
         int countHeightTiles = 0;
@@ -89,7 +198,7 @@ public class ProcedureGeneration : MonoBehaviour
     }
 
 
-    private int[,] GenerateCaves(float _chanceToGenerateCave)
+    public int[,] GenerateCaves(float _chanceToGenerateCave)
     {
         int countOfCaves = (startHeight * width) / (maxSizeOfCaves * maxSizeOfCaves);
         for (int i = 0; i < countOfCaves; i++)
@@ -111,25 +220,12 @@ public class ProcedureGeneration : MonoBehaviour
         float chanceToChangeDir;
 
         int countOfSteps = 0;
-        int countOfStepsOneWay = 0;
+        int countOfStepsLeft = 0;
+        int countOfStepsRight = 0;
         bool stepLeft = true, stepRight = true;
         
         int caveX = Random.Range(1, map.GetUpperBound(0) - 1);
         int caveY = Random.Range(1, startHeight);
-
-        /*if (map[caveX, caveY + 1 ] == 0 || map[caveX + 1, caveY] == 0 || map[caveX - 1, caveY] == 0 )
-        {
-            map[caveX, caveY] = 0;
-        }
-        else
-        {
-            while ( map[caveX, caveY + 1 ] != 0 || map[caveX, caveY] != 1)
-            {
-                caveY++;
-            }
-
-            map[caveX, caveY] = 0;
-        }*/
 
         if (map[caveX, caveY] == 1)
         {
@@ -167,94 +263,112 @@ public class ProcedureGeneration : MonoBehaviour
         {
             
             size = Random.Range(2, 3);
-            direction = Random.Range(0,1);
+            
+            
+            int[] dirNum = {-1, 1,-1, 1}; 
+            direction = dirNum[Random.Range(0,3)];
 
-            if (direction == 0 && stepLeft)
+            if (direction == -1)
+             {
+                 if (countOfSteps == 0)
+                 {
+                     countOfStepsLeft++;
+                 }
+                 else if ( countOfStepsRight == 0 )
+                 {
+                     countOfStepsLeft++;
+                 }
+                 else if (countOfStepsRight >= 2)
+                 {
+                     chanceToChangeDir = Random.Range(0f, 1f);
+                     if (chanceToChangeDir < 0.9f)
+                     {
+                         countOfStepsRight = 0;
+                         countOfStepsLeft++;
+                     }
+                     else
+                     {
+                         continue;
+                     }
+                 }
+                 else
+                 {
+                     continue;
+                 }
+             }
+             else
+             {
+                 if (countOfSteps == 0)
+                 {
+                     countOfStepsRight++;
+                 }
+                 else if ( countOfStepsLeft == 0)
+                 {
+                     countOfStepsRight++;
+                 }
+                 else if (countOfStepsLeft >= 2)
+                 {
+                     chanceToChangeDir = Random.Range(0f, 1f);
+                     if (chanceToChangeDir < 0.9f)
+                     {
+                         countOfStepsLeft = 0;
+                         countOfStepsRight++;
+                     }
+                     else
+                     {
+                         continue;
+                     }
+                 }
+                 else
+                 {
+                     continue;
+                 }
+             }
+
+            map[caveX, caveY - 1] = 0;
+            
+            if (caveX + size - 1 > map.GetUpperBound(1) - 1 || caveX - size - 1 < 2 )
             {
-                map[caveX, caveY - 1] = 0;
+                break;
+            }
+            
+            for (int i = 1; i < size; i++)
+            {
+                map[caveX + (i * direction), caveY - 1] = 0;
+            }
 
-                if (caveX - size - 1 < 2)
-                {
-                    break;
-                }
-                
-                for (int i = 1; i < size; i++)
-                {
-                    map[caveX - i, caveY - 1] = 0;
-                }
-
+            if (direction == -1)
+            {
                 caveX -= size - 1;
-                caveY -= 1;
-                if (caveY - 1 < 2)
-                {
-                    break;
-                }
-                
-                countOfStepsOneWay++;
-                
-                if (countOfStepsOneWay >= 2)
-                {
-                    chanceToChangeDir = Random.Range(0f, 1f);
-                    if (chanceToChangeDir < 0.7f)
-                    {
-                        stepRight = true;
-                        stepLeft = false;
-                    
-                        countOfStepsOneWay = 0;
-                    }
-                }
-                else
-                {
-                    stepRight = false;
-                }
-
-                countOfSteps++;
             }
-            else if(stepRight)
+            else
             {
-                map[caveX, caveY - 1] = 0;
-
-                if (caveX + size - 1 > map.GetUpperBound(1) - 1)
-                {
-                    break;
-                }
-                
-                for (int i = 1; i < size; i++)
-                {
-                    map[caveX + i, caveY - 1] = 0;
-                }
-                
                 caveX += size - 1;
-                caveY -= 1;
-                if (caveY - 1 < 2)
-                {
-                    break;
-                }
-                
-                countOfStepsOneWay++;
-                
-                if (countOfStepsOneWay >= 2)
-                {
-                    chanceToChangeDir = Random.Range(0f, 1f);
-                    if (chanceToChangeDir<0.7f)
-                    {
-                        stepRight = false;
-                        stepLeft = true;
-
-                        countOfStepsOneWay = 0;
-                    }
-                }
-                else
-                {
-                    stepLeft = false;
-                }
-                
-                countOfSteps++;
             }
+            caveY -= 1;
+            
+            if (caveY - 1 < 6)
+            {
+                break;
+            }
+            
+            countOfSteps++;
             
         }
         return map;
     }
     
- 
+}
+
+[Serializable]
+public class LvlSettings
+{
+    public List<SecondList> mapLvl;
+    
+}
+
+[Serializable]
+public class SecondList
+{
+    public List<int> mapList;
 }

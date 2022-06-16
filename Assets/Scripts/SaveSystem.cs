@@ -6,6 +6,7 @@ public static class SaveSystem
     public static void SaveFile<T>(T obj, string path, string fileName)
     {
         string fileJson = JsonUtility.ToJson(obj);
+        Debug.Log(fileJson);
         File.WriteAllText($"{path}/{fileName}", fileJson);
     }
     public static T LoadFile<T>(string path, string fileName)

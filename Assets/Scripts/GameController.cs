@@ -11,6 +11,8 @@ public class GameController : MonoBehaviour
     /// </summary>
     [SerializeField] private Spawner _spawner;
     [SerializeField] private CameraController _cameraController;
+    [SerializeField] private ProcedureGeneration procedureGeneration;
+    [SerializeField] private GameObject endOfLvl;
     
     void Awake()
     {
@@ -28,12 +30,16 @@ public class GameController : MonoBehaviour
             _spawner.GenerateMainCharacter();
             yield return new WaitForSeconds(1);
             _cameraController.Active = true;
+            Vector3 posEndOfLvl =  procedureGeneration.GetExitFromLvl(procedureGeneration.Decode(procedureGeneration.lvlSettings.mapLvl));
+            Instantiate(endOfLvl, posEndOfLvl, Quaternion.identity);
         }
         else
         {
             _spawner.GenerateMainCharacterWithCheackPoint();
             yield return new WaitForSeconds(0.1f);
             _cameraController.Active = true;
+            Vector3 posEndOfLvl =  procedureGeneration.GetExitFromLvl(procedureGeneration.Decode(procedureGeneration.lvlSettings.mapLvl));
+            Instantiate(endOfLvl, posEndOfLvl, Quaternion.identity);
         }
     }
 }
