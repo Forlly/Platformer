@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   procedureGeneration: {fileID: 0}
+  spawner: {fileID: 7839110719409379196, guid: f43709d81f934644ba096cdd61195647, type: 3}
 --- !u!61 &984867790357435801
 BoxCollider2D:
   m_ObjectHideFlags: 0

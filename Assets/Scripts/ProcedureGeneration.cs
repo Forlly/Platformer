@@ -35,24 +35,25 @@ public class ProcedureGeneration : MonoBehaviour
         path = Path.Combine(Application.dataPath, "Json");
         
         GetLvlSettings();
-        Debug.Log(lvlSettings.mapLvl);
-        
-        if (lvlSettings.mapLvl == null)
+
+        if (lvlSettings.lvl == 0)
         {
             map = GenerationMap(startHeight, 6);
             float a = Time.realtimeSinceStartup;
             map = GenerateCaves(ChanceToGenerateCave);
 
-            lvlSettings.mapLvl = Encode(map);
-            Debug.Log(lvlSettings.mapLvl);
+            lvlSettings.lvl = 1;
+            lvlSettings.listOfMaps = new List<ListMapLvl>();
+            
+            Debug.Log(lvlSettings.listOfMaps);
+            lvlSettings.listOfMaps.Add(Encode(map));
+            Debug.Log(lvlSettings.lvl);
             
             SaveSystem.SaveFile<LvlSettings>(lvlSettings, path, fileName);
             Debug.Log((Time.realtimeSinceStartup - a).ToString("F6"));
         }
-        
-        
-        
-        UpdateMap(Decode(lvlSettings.mapLvl), tilemap, tilemapBase);
+
+        UpdateMap(Decode(lvlSettings.listOfMaps[lvlSettings.lvl - 1].mapLvl), tilemap, tilemapBase);
     }
     
     
@@ -62,6 +63,13 @@ public class ProcedureGeneration : MonoBehaviour
         map = GenerationMap(startHeight, 6);
         map = GenerateCaves(ChanceToGenerateCave);
         
+        lvlSettings.lvl++;
+        lvlSettings.listOfMaps.Add(Encode(map));;
+        Debug.Log(lvlSettings.lvl);
+            
+        SaveSystem.SaveFile<LvlSettings>(lvlSettings, path, fileName);
+        
+        tilemap.ClearAllTiles();
         UpdateMap(map, tilemap, tilemapBase);
     }
 
@@ -81,10 +89,29 @@ public class ProcedureGeneration : MonoBehaviour
         Debug.Log(tilemap.GetCellCenterLocal(new Vector3Int(_map.GetUpperBound(0) - 1, j, 0)));
         return tilemap.GetCellCenterLocal(new Vector3Int(_map.GetUpperBound(0) - 1, j, 0));
     }
-
-    private List<SecondList> Encode(int[,] array)
+    
+    
+    public Vector3 GetStartOfLvl(int[,] _map)
     {
-        List<SecondList>  tempList = new List<SecondList>();
+        int j = _map.GetUpperBound(1) - 1;
+
+        while (_map[0,j] == 0 && _map[0,j - 1] == 0)
+        {
+            j--;
+        }
+        
+        Debug.Log(_map[0,j]);
+        Debug.Log(_map[0,j - 1]);
+
+        Debug.Log(tilemap.GetCellCenterLocal(new Vector3Int(0, j, 0)));
+        return tilemap.GetCellCenterLocal(new Vector3Int(0, j, 0));
+    }
+    
+
+    private ListMapLvl Encode(int[,] array)
+    {
+        ListMapLvl  tempList = new ListMapLvl();
+        tempList.mapLvl = new List<SecondList>();
 
         for (int i = 0; i < array.GetUpperBound(0); i++)
         {
@@ -97,7 +124,7 @@ public class ProcedureGeneration : MonoBehaviour
 
             }
                 
-            tempList.Add(tmp);
+            tempList.mapLvl.Add(tmp);
         }
 
         return tempList;
@@ -363,9 +390,18 @@ public class ProcedureGeneration : MonoBehaviour
 [Serializable]
 public class LvlSettings
 {
-    public List<SecondList> mapLvl;
+    public int lvl;
+    public List<ListMapLvl> listOfMaps;
+    //public List<SecondList> mapLvl;
     
 }
+
+[Serializable]
+public class ListMapLvl
+{
+    public List<SecondList> mapLvl;
+}
+
 
 [Serializable]
 public class SecondList

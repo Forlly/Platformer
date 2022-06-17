@@ -30,7 +30,8 @@ public class GameController : MonoBehaviour
             _spawner.GenerateMainCharacter();
             yield return new WaitForSeconds(1);
             _cameraController.Active = true;
-            Vector3 posEndOfLvl =  procedureGeneration.GetExitFromLvl(procedureGeneration.Decode(procedureGeneration.lvlSettings.mapLvl));
+            Vector3 posEndOfLvl =  procedureGeneration.GetExitFromLvl(procedureGeneration.Decode(
+                procedureGeneration.lvlSettings.listOfMaps[procedureGeneration.lvlSettings.lvl - 1].mapLvl));
             Instantiate(endOfLvl, posEndOfLvl, Quaternion.identity);
         }
         else
@@ -38,7 +39,8 @@ public class GameController : MonoBehaviour
             _spawner.GenerateMainCharacterWithCheackPoint();
             yield return new WaitForSeconds(0.1f);
             _cameraController.Active = true;
-            Vector3 posEndOfLvl =  procedureGeneration.GetExitFromLvl(procedureGeneration.Decode(procedureGeneration.lvlSettings.mapLvl));
+            Vector3 posEndOfLvl =  procedureGeneration.GetExitFromLvl(procedureGeneration.Decode(
+                procedureGeneration.lvlSettings.listOfMaps[procedureGeneration.lvlSettings.lvl - 1].mapLvl));
             Instantiate(endOfLvl, posEndOfLvl, Quaternion.identity);
         }
     }

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class TransitionBetweenLevels : MonoBehaviour
 {
-    [SerializeField] private ProcedureGeneration procedureGeneration;
+    [SerializeField] private Spawner spawner;
 
     private void OnTriggerEnter2D(Collider2D col)
     {
@@ -17,5 +17,8 @@ public class TransitionBetweenLevels : MonoBehaviour
     private void GoToNextLevel()
     {
         ProcedureGeneration.Instans.GeneratingAllMap();
+        Vector3 posStartOfLvlOfLvl =  ProcedureGeneration.Instans.GetStartOfLvl(ProcedureGeneration.Instans.Decode(
+            ProcedureGeneration.Instans.lvlSettings.listOfMaps[ProcedureGeneration.Instans.lvlSettings.lvl - 1].mapLvl));
+        Instantiate(spawner, posStartOfLvlOfLvl, Quaternion.identity);
     }
 }
