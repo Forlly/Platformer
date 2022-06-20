@@ -28,4 +28,9 @@ public class Spawner : MonoBehaviour
 
         GenerateMainCharacter(playerPos);
     }
+
+    public void MovePlayerPosToNewSpawnPoint()
+    {
+        linkStore.playerLink.transform.position = transform.position;
+    }
 }

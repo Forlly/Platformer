@@ -5,20 +5,31 @@ using UnityEngine;
 
 public class TransitionBetweenLevels : MonoBehaviour
 {
-    [SerializeField] private Spawner spawner;
-
+    private bool isTrigger = false;
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.CompareTag("Player"))
+        if (col.CompareTag("Player") && !isTrigger)
+        {
+            isTrigger = true;
             GoToNextLevel();
+        }
 
     }
 
     private void GoToNextLevel()
     {
         ProcedureGeneration.Instans.GeneratingAllMap();
+        MoveSpawnPointOnNewPoint();
+        GenerateItemsOnMap.Instants.GenerateItems(ProcedureGeneration.Instans.Decode(
+            ProcedureGeneration.Instans.lvlSettings.listOfMaps[ProcedureGeneration.Instans.lvlSettings.lvl - 1].mapLvl));
+        Destroy(gameObject);
+    }
+
+    public void MoveSpawnPointOnNewPoint()
+    {
         Vector3 posStartOfLvlOfLvl =  ProcedureGeneration.Instans.GetStartOfLvl(ProcedureGeneration.Instans.Decode(
             ProcedureGeneration.Instans.lvlSettings.listOfMaps[ProcedureGeneration.Instans.lvlSettings.lvl - 1].mapLvl));
-        Instantiate(spawner, posStartOfLvlOfLvl, Quaternion.identity);
+        LinkStore.Instans.spawner.transform.position = posStartOfLvlOfLvl;
+        LinkStore.Instans.spawner.MovePlayerPosToNewSpawnPoint();
     }
 }

@@ -83,10 +83,6 @@ public class ProcedureGeneration : MonoBehaviour
             j++;
         }
         
-        Debug.Log(_map[_map.GetUpperBound(0) - 1,j]);
-        Debug.Log(_map[_map.GetUpperBound(0) - 1,j + 1]);
-
-        Debug.Log(tilemap.GetCellCenterLocal(new Vector3Int(_map.GetUpperBound(0) - 1, j, 0)));
         return tilemap.GetCellCenterLocal(new Vector3Int(_map.GetUpperBound(0) - 1, j, 0));
     }
     
@@ -100,11 +96,12 @@ public class ProcedureGeneration : MonoBehaviour
             j--;
         }
         
-        Debug.Log(_map[0,j]);
-        Debug.Log(_map[0,j - 1]);
-
-        Debug.Log(tilemap.GetCellCenterLocal(new Vector3Int(0, j, 0)));
         return tilemap.GetCellCenterLocal(new Vector3Int(0, j, 0));
+    }
+
+    public Vector3 GetPositionOnMap(int posX, int posY)
+    {
+        return tilemap.GetCellCenterLocal(new Vector3Int(posX, posY, 0));
     }
     
 
@@ -284,6 +281,15 @@ public class ProcedureGeneration : MonoBehaviour
                 map[caveX - i, caveY] = 0;
                 caveX -= i;
             }
+        }
+
+        if ((size - 1) % 2 == 0 )
+        {
+            caveX -= size - 1;
+        }
+        else
+        {
+            caveX += size - 1;
         }
 
         while (countOfSteps < reqCaveAmount)

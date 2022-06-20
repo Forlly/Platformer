@@ -12,7 +12,8 @@ public class GameController : MonoBehaviour
     [SerializeField] private Spawner _spawner;
     [SerializeField] private CameraController _cameraController;
     [SerializeField] private ProcedureGeneration procedureGeneration;
-    [SerializeField] private GameObject endOfLvl;
+    [SerializeField] private GenerateItemsOnMap generateItemsOnMap;
+    [SerializeField] private TransitionBetweenLevels endOfLvl;
     
     void Awake()
     {
@@ -33,6 +34,7 @@ public class GameController : MonoBehaviour
             Vector3 posEndOfLvl =  procedureGeneration.GetExitFromLvl(procedureGeneration.Decode(
                 procedureGeneration.lvlSettings.listOfMaps[procedureGeneration.lvlSettings.lvl - 1].mapLvl));
             Instantiate(endOfLvl, posEndOfLvl, Quaternion.identity);
+            endOfLvl.MoveSpawnPointOnNewPoint();
         }
         else
         {
@@ -42,6 +44,9 @@ public class GameController : MonoBehaviour
             Vector3 posEndOfLvl =  procedureGeneration.GetExitFromLvl(procedureGeneration.Decode(
                 procedureGeneration.lvlSettings.listOfMaps[procedureGeneration.lvlSettings.lvl - 1].mapLvl));
             Instantiate(endOfLvl, posEndOfLvl, Quaternion.identity);
+            endOfLvl.MoveSpawnPointOnNewPoint();
+            generateItemsOnMap.GenerateItems(procedureGeneration.Decode(
+                procedureGeneration.lvlSettings.listOfMaps[procedureGeneration.lvlSettings.lvl - 1].mapLvl));
         }
     }
 }
