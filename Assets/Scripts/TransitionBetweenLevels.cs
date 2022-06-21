@@ -20,9 +20,15 @@ public class TransitionBetweenLevels : MonoBehaviour
     {
         ProcedureGeneration.Instans.GeneratingAllMap();
         MoveSpawnPointOnNewPoint();
+        
         GenerateItemsOnMap.Instants.GenerateItems(ProcedureGeneration.Instans.Decode(
+            ProcedureGeneration.Instans.lvlSettings.listOfMaps[ProcedureGeneration.Instans.lvlSettings.lvl - 1].mapLvl),
+            ProcedureGeneration.Instans.Decode(
+                ProcedureGeneration.Instans.lvlSettings.listOfMaps[ProcedureGeneration.Instans.lvlSettings.lvl - 2].mapLvl));
+
+        transform.position = ProcedureGeneration.Instans.GetExitFromLvl(ProcedureGeneration.Instans.Decode(
             ProcedureGeneration.Instans.lvlSettings.listOfMaps[ProcedureGeneration.Instans.lvlSettings.lvl - 1].mapLvl));
-        Destroy(gameObject);
+        isTrigger = false;
     }
 
     public void MoveSpawnPointOnNewPoint()

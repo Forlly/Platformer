@@ -2897,14 +2897,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cccea2b99d34cec4a90fc1d9d5857eac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  items:
-  - {fileID: 2464487967707394281, guid: 6a48875590c54e34a8dc643f2074da78, type: 3}
-  - {fileID: 5622064468246739862, guid: 349e36321c6a63742bb9e0ba204b767d, type: 3}
-  - {fileID: 5622064468246739862, guid: 79f919dcc734249419b8a8674e08269b, type: 3}
-  - {fileID: 8994026603672125583, guid: 809126caf43fd124cadf99eb424afdb3, type: 3}
-  - {fileID: 7469158964039698948, guid: 1e6fd7981afbd6742a2ea0b48ac959c7, type: 3}
-  - {fileID: 7469158964039698948, guid: 685c5e322a85f1848ade61077ade533d, type: 3}
   maxCountOfItems: 15
+  items:
+  - {fileID: 5622064468246739862, guid: 349e36321c6a63742bb9e0ba204b767d, type: 3}
+  - {fileID: 7469158964039698948, guid: 1e6fd7981afbd6742a2ea0b48ac959c7, type: 3}
+  - {fileID: 8994026603672125583, guid: 809126caf43fd124cadf99eb424afdb3, type: 3}
+  - {fileID: 7469158964039698948, guid: 685c5e322a85f1848ade61077ade533d, type: 3}
+  - {fileID: 5622064468246739862, guid: 79f919dcc734249419b8a8674e08269b, type: 3}
+  - {fileID: 2464487967707394281, guid: 6a48875590c54e34a8dc643f2074da78, type: 3}
+  generatesItems: []
 --- !u!1 &1413120601
 GameObject:
   m_ObjectHideFlags: 0
