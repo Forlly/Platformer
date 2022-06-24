@@ -2345,6 +2345,7 @@ MonoBehaviour:
   procedureGeneration: {fileID: 1412365724}
   generateItemsOnMap: {fileID: 1412365726}
   endOfLvl: {fileID: 6630436032293625620, guid: 24cf652d23a65594d8a496cc5493db4f, type: 3}
+  settingsSystem: {fileID: 1456858622}
 --- !u!4 &1216983975
 Transform:
   m_ObjectHideFlags: 0
@@ -2869,6 +2870,7 @@ MonoBehaviour:
   lvlSettings:
     lvl: 0
     listOfMaps: []
+  currentLvl: 1
 --- !u!4 &1412365725
 Transform:
   m_ObjectHideFlags: 0

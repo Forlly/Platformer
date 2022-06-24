@@ -27,6 +27,7 @@ public class ProcedureGeneration : MonoBehaviour
     private string fileName = "LvlSettings.json";
     public int[,] map;
     
+    
     void Start()
     {
         Instans = this;
@@ -53,7 +54,7 @@ public class ProcedureGeneration : MonoBehaviour
             Debug.Log((Time.realtimeSinceStartup - a).ToString("F6"));
         }
 
-        UpdateMap(Decode(lvlSettings.listOfMaps[lvlSettings.lvl - 1].mapLvl), tilemap, tilemapBase);
+        UpdateMap(Decode(lvlSettings.listOfMaps[SaveSystem.LoadFile<LvlSettings>(path, fileName).currentLvl].mapLvl), tilemap, tilemapBase);
     }
     
     
@@ -397,6 +398,7 @@ public class ProcedureGeneration : MonoBehaviour
 public class LvlSettings
 {
     public int lvl;
+    public int currentLvl = 1;
     public List<ListMapLvl> listOfMaps;
     //public List<SecondList> mapLvl;
     

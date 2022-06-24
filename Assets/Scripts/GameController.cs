@@ -1,4 +1,5 @@
 using System.Collections;
+using System.IO;
 using UnityEngine;
 /// <summary>
 /// \brief Класс контроллирующий логику игры
@@ -14,6 +15,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private ProcedureGeneration procedureGeneration;
     [SerializeField] private GenerateItemsOnMap generateItemsOnMap;
     [SerializeField] private TransitionBetweenLevels endOfLvl;
+    [SerializeField] private SettingsSystem settingsSystem;
     
     void Awake()
     {
@@ -32,7 +34,8 @@ public class GameController : MonoBehaviour
             yield return new WaitForSeconds(1);
             _cameraController.Active = true;
             Vector3 posEndOfLvl =  procedureGeneration.GetExitFromLvl(procedureGeneration.Decode(
-                procedureGeneration.lvlSettings.listOfMaps[procedureGeneration.lvlSettings.lvl - 1].mapLvl));
+                procedureGeneration.lvlSettings.listOfMaps[SaveSystem.LoadFile<LvlSettings>(Path.Combine(Application.dataPath, "Json"),
+                    "LvlSettings.json").lvl].mapLvl));
             Instantiate(endOfLvl, posEndOfLvl, Quaternion.identity);
             endOfLvl.MoveSpawnPointOnNewPoint();
         }
@@ -42,11 +45,13 @@ public class GameController : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
             _cameraController.Active = true;
             Vector3 posEndOfLvl =  procedureGeneration.GetExitFromLvl(procedureGeneration.Decode(
-                procedureGeneration.lvlSettings.listOfMaps[procedureGeneration.lvlSettings.lvl - 1].mapLvl));
+                procedureGeneration.lvlSettings.listOfMaps[SaveSystem.LoadFile<LvlSettings>(Path.Combine(Application.dataPath, "Json"),
+                    "LvlSettings.json").currentLvl].mapLvl));
             Instantiate(endOfLvl, posEndOfLvl, Quaternion.identity);
             endOfLvl.MoveSpawnPointOnNewPoint();
             generateItemsOnMap.GenerateItems(procedureGeneration.Decode(
-                procedureGeneration.lvlSettings.listOfMaps[procedureGeneration.lvlSettings.lvl - 1].mapLvl));
+                procedureGeneration.lvlSettings.listOfMaps[SaveSystem.LoadFile<LvlSettings>(Path.Combine(Application.dataPath, "Json"),
+                    "LvlSettings.json").currentLvl].mapLvl));
         }
     }
 }

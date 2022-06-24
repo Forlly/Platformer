@@ -59,4 +59,5 @@ public class Settings
 {
     public float volume = 1f;
     public bool musicEnabled = true;
+    
 }
