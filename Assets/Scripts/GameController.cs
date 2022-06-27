@@ -37,7 +37,8 @@ public class GameController : MonoBehaviour
                 procedureGeneration.lvlSettings.listOfMaps[SaveSystem.LoadFile<LvlSettings>(Path.Combine(Application.dataPath, "Json"),
                     "LvlSettings.json").lvl].mapLvl));
             Instantiate(endOfLvl, posEndOfLvl, Quaternion.identity);
-            endOfLvl.MoveSpawnPointOnNewPoint();
+            endOfLvl.MoveSpawnPointOnNewPoint(SaveSystem.LoadFile<LvlSettings>(Path.Combine(Application.dataPath, "Json"),
+                "LvlSettings.json").currentLvl);
         }
         else
         {
@@ -48,7 +49,8 @@ public class GameController : MonoBehaviour
                 procedureGeneration.lvlSettings.listOfMaps[SaveSystem.LoadFile<LvlSettings>(Path.Combine(Application.dataPath, "Json"),
                     "LvlSettings.json").currentLvl].mapLvl));
             Instantiate(endOfLvl, posEndOfLvl, Quaternion.identity);
-            endOfLvl.MoveSpawnPointOnNewPoint();
+            endOfLvl.MoveSpawnPointOnNewPoint(SaveSystem.LoadFile<LvlSettings>(Path.Combine(Application.dataPath, "Json"),
+                "LvlSettings.json").currentLvl);
             generateItemsOnMap.GenerateItems(procedureGeneration.Decode(
                 procedureGeneration.lvlSettings.listOfMaps[SaveSystem.LoadFile<LvlSettings>(Path.Combine(Application.dataPath, "Json"),
                     "LvlSettings.json").currentLvl].mapLvl));

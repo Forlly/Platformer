@@ -8,6 +8,9 @@ public class LevelSelection : MonoBehaviour
     [SerializeField] private RectTransform content;
     [SerializeField] private RectTransform test;
     [SerializeField] private Button lvlButton;
+    [SerializeField] private GameObject scrollView;
+    
+    [SerializeField] private Button closeView;
     [SerializeField] private SettingsSystem settingsSystem;
 
     private List<Button> lvlsButtons;
@@ -17,6 +20,8 @@ public class LevelSelection : MonoBehaviour
     private bool AddLine = false;
     void Start()
     {
+        closeView.onClick.AddListener(CloseScrollView);
+        
         lvlSettings = new LvlSettings();
         lvlSettings =  
             SaveSystem.LoadFile<LvlSettings>(Path.Combine(Application.dataPath, "Json"), "LvlSettings.json");
@@ -30,14 +35,14 @@ public class LevelSelection : MonoBehaviour
             var i1 = i;
             Button tmp = Instantiate(lvlButton, content);
             tmp.GetComponentInChildren<Text>().text = i1.ToString();
-            tmp.onClick.AddListener(() => { LoadLevel(i1 - 1); });
+            tmp.onClick.AddListener(() => { LoadLevel(i1); });
             
             
             if (sizeOfLvlsImg >= (test.rect.width - (3 * sizeOfLvlsImg /gridLayout.cellSize.x) - 70))
             {
                 
                 sizeOfLvlsImg = 0f;
-                sizeOfLvlsImgY += gridLayout.cellSize.x + 6f;
+                sizeOfLvlsImgY += gridLayout.cellSize.x + 10f;
                 
                 if (AddLine)
                 {
@@ -62,10 +67,15 @@ public class LevelSelection : MonoBehaviour
 
     }
 
+    private void CloseScrollView()
+    {
+        scrollView.SetActive(false);
+    }
+
     private void LoadLevel(int numLvl)
     {
-        Debug.Log(numLvl);
-        lvlSettings.currentLvl = numLvl + 1;
+
+        lvlSettings.currentLvl = numLvl;
         SaveSystem.SaveFile<LvlSettings>(lvlSettings, Path.Combine(Application.dataPath, "Json"), "LvlSettings.json");
         SceneTransition.instance.SwitchToScene("lvl1");
     }

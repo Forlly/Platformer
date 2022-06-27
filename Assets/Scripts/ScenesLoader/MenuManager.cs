@@ -10,11 +10,15 @@ public class MenuManager : MonoBehaviour
     private Vector2 mousPos;
     [SerializeField] Button startButton;
     [SerializeField] Button settingsButton;
+    [SerializeField] Button selectLevelButton;
     [SerializeField] Button exitButton;
+
+    [SerializeField] private GameObject menuLevels;
     private void Start()
     {
         startButton.onClick.AddListener(StartPlay);
         settingsButton.onClick.AddListener(SettingsLoad);
+        selectLevelButton.onClick.AddListener(OpenMenuLevels);
         exitButton.onClick.AddListener(Exit);
     }
 
@@ -43,6 +47,10 @@ public class MenuManager : MonoBehaviour
         }
     }*/
 
+    private void OpenMenuLevels()
+    {
+        menuLevels.SetActive(true);
+    }
     private void StartPlay()
     {
         SceneTransition.instance.SwitchToScene("lvl1");
