@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.IO;
 using UnityEngine;
 
@@ -57,7 +58,14 @@ public class TransitionBetweenLevels : MonoBehaviour
                 ProcedureGeneration.Instans.lvlSettings.listOfMaps[lvlSettings.currentLvl - 1].mapLvl));
             
         }
-       
+
+        StartCoroutine(DelayBeforeTransition());
+    }
+
+
+    private IEnumerator DelayBeforeTransition()
+    {
+        yield return new WaitForSeconds(0.1f);
         isTrigger = false;
     }
 
