@@ -20,7 +20,7 @@ public class TransitionBetweenLevels : MonoBehaviour
     {
 
         if (SaveSystem.LoadFile<LvlSettings>(Path.Combine(Application.dataPath, "Json"), "LvlSettings.json").currentLvl 
-            == SaveSystem.LoadFile<LvlSettings>(Path.Combine(Application.dataPath, "Json"), "LvlSettings.json").lvl)
+            >= SaveSystem.LoadFile<LvlSettings>(Path.Combine(Application.dataPath, "Json"), "LvlSettings.json").lvl - 1)
         {
             ProcedureGeneration.Instans.GeneratingAllMap();
             MoveSpawnPointOnNewPoint(ProcedureGeneration.Instans.lvlSettings.lvl - 1);
@@ -36,7 +36,7 @@ public class TransitionBetweenLevels : MonoBehaviour
         else
         {
             MoveSpawnPointOnNewPoint(SaveSystem
-                .LoadFile<LvlSettings>(Path.Combine(Application.dataPath, "Json"), "LvlSettings.json").currentLvl);
+                .LoadFile<LvlSettings>(Path.Combine(Application.dataPath, "Json"), "LvlSettings.json").currentLvl - 1);
             
             LvlSettings lvlSettings =
                 SaveSystem.LoadFile<LvlSettings>(Path.Combine(Application.dataPath, "Json"), "LvlSettings.json");
@@ -45,16 +45,16 @@ public class TransitionBetweenLevels : MonoBehaviour
             SaveSystem.SaveFile<LvlSettings>(lvlSettings,Path.Combine(Application.dataPath, "Json"), "LvlSettings.json");
 
             ProcedureGeneration.Instans.UpdateMap(ProcedureGeneration.Instans.Decode(
-                ProcedureGeneration.Instans.lvlSettings.listOfMaps[lvlSettings.currentLvl].mapLvl), 
+                ProcedureGeneration.Instans.lvlSettings.listOfMaps[lvlSettings.currentLvl - 1].mapLvl), 
                 ProcedureGeneration.Instans.tilemap, ProcedureGeneration.Instans.tilemapBase);
             
             GenerateItemsOnMap.Instants.GenerateItems(ProcedureGeneration.Instans.Decode(
-                    ProcedureGeneration.Instans.lvlSettings.listOfMaps[lvlSettings.currentLvl].mapLvl),
+                    ProcedureGeneration.Instans.lvlSettings.listOfMaps[lvlSettings.currentLvl - 1].mapLvl),
                 ProcedureGeneration.Instans.Decode(
-                    ProcedureGeneration.Instans.lvlSettings.listOfMaps[lvlSettings.currentLvl].mapLvl));
+                    ProcedureGeneration.Instans.lvlSettings.listOfMaps[lvlSettings.currentLvl - 1].mapLvl));
 
             transform.position = ProcedureGeneration.Instans.GetExitFromLvl(ProcedureGeneration.Instans.Decode(
-                ProcedureGeneration.Instans.lvlSettings.listOfMaps[lvlSettings.currentLvl].mapLvl));
+                ProcedureGeneration.Instans.lvlSettings.listOfMaps[lvlSettings.currentLvl - 1].mapLvl));
             
         }
        

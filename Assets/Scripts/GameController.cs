@@ -38,7 +38,7 @@ public class GameController : MonoBehaviour
                     "LvlSettings.json").lvl].mapLvl));
             Instantiate(endOfLvl, posEndOfLvl, Quaternion.identity);
             endOfLvl.MoveSpawnPointOnNewPoint(SaveSystem.LoadFile<LvlSettings>(Path.Combine(Application.dataPath, "Json"),
-                "LvlSettings.json").currentLvl);
+                "LvlSettings.json").currentLvl - 1);
         }
         else
         {
@@ -47,13 +47,13 @@ public class GameController : MonoBehaviour
             _cameraController.Active = true;
             Vector3 posEndOfLvl =  procedureGeneration.GetExitFromLvl(procedureGeneration.Decode(
                 procedureGeneration.lvlSettings.listOfMaps[SaveSystem.LoadFile<LvlSettings>(Path.Combine(Application.dataPath, "Json"),
-                    "LvlSettings.json").currentLvl].mapLvl));
+                    "LvlSettings.json").currentLvl - 1].mapLvl));
             Instantiate(endOfLvl, posEndOfLvl, Quaternion.identity);
             endOfLvl.MoveSpawnPointOnNewPoint(SaveSystem.LoadFile<LvlSettings>(Path.Combine(Application.dataPath, "Json"),
-                "LvlSettings.json").currentLvl);
+                "LvlSettings.json").currentLvl - 1);
             generateItemsOnMap.GenerateItems(procedureGeneration.Decode(
                 procedureGeneration.lvlSettings.listOfMaps[SaveSystem.LoadFile<LvlSettings>(Path.Combine(Application.dataPath, "Json"),
-                    "LvlSettings.json").currentLvl].mapLvl));
+                    "LvlSettings.json").currentLvl - 1].mapLvl));
         }
     }
 }

@@ -44,6 +44,7 @@ public class ProcedureGeneration : MonoBehaviour
             map = GenerateCaves(ChanceToGenerateCave);
 
             lvlSettings.lvl = 1;
+            lvlSettings.currentLvl = 1;
             lvlSettings.listOfMaps = new List<ListMapLvl>();
             
             Debug.Log(lvlSettings.listOfMaps);
@@ -54,7 +55,7 @@ public class ProcedureGeneration : MonoBehaviour
             Debug.Log((Time.realtimeSinceStartup - a).ToString("F6"));
         }
 
-        UpdateMap(Decode(lvlSettings.listOfMaps[SaveSystem.LoadFile<LvlSettings>(path, fileName).currentLvl].mapLvl), tilemap, tilemapBase);
+        UpdateMap(Decode(lvlSettings.listOfMaps[SaveSystem.LoadFile<LvlSettings>(path, fileName).currentLvl - 1].mapLvl), tilemap, tilemapBase);
     }
     
     
@@ -65,12 +66,11 @@ public class ProcedureGeneration : MonoBehaviour
         map = GenerateCaves(ChanceToGenerateCave);
         
         lvlSettings.lvl++;
+        lvlSettings.currentLvl = lvlSettings.lvl;
         lvlSettings.listOfMaps.Add(Encode(map));;
-        Debug.Log(lvlSettings.lvl);
-            
+    
         SaveSystem.SaveFile<LvlSettings>(lvlSettings, path, fileName);
         
-        tilemap.ClearAllTiles();
         UpdateMap(map, tilemap, tilemapBase);
     }
 
@@ -168,6 +168,8 @@ public class ProcedureGeneration : MonoBehaviour
     
     public void UpdateMap(int[,] map, Tilemap tilemap, TileBase tile)
     {
+        tilemap.ClearAllTiles();
+        
         for (int i = 0; i < map.GetUpperBound(0); i++)
         {
             for (int j = 0; j < map.GetUpperBound(1); j++)
@@ -247,8 +249,7 @@ public class ProcedureGeneration : MonoBehaviour
         int countOfSteps = 0;
         int countOfStepsLeft = 0;
         int countOfStepsRight = 0;
-        bool stepLeft = true, stepRight = true;
-        
+
         int caveX = Random.Range(1, map.GetUpperBound(0) - 1);
         int caveY = Random.Range(1, startHeight);
 
