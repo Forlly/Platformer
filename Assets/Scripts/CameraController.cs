@@ -5,7 +5,7 @@ using UnityEngine;
 /// </summary>
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] private CinemachineVirtualCamera cinemachineVirtualCamera;
+    [SerializeField] public CinemachineVirtualCamera cinemachineVirtualCamera;
     [SerializeField] private LinkStore linkStore;
     /// <summary>
     /// \param active Активация следования камеры за персонажем
@@ -17,8 +17,7 @@ public class CameraController : MonoBehaviour
         {
             active = value;
             FindPlayer();
-            /*if (active && FindPlayer())
-                StartCoroutine(CameraFollow());*/
+
         }
         get => active;
     }
@@ -36,6 +35,10 @@ public class CameraController : MonoBehaviour
 {
         playerTransform = linkStore.playerLink.transform;
         cinemachineVirtualCamera.Follow = playerTransform;
+        
+        linkStore.camera = this;
+        linkStore.cvCamera = cinemachineVirtualCamera;
+        
         return playerTransform != null;
     }
 }

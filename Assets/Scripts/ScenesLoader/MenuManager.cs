@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,57 +9,40 @@ public class MenuManager : MonoBehaviour
     private Ray ray;
     private RaycastHit2D hit;
     private Vector2 mousPos;
-    [SerializeField] Button startButton;
-    [SerializeField] Button settingsButton;
-    [SerializeField] Button selectLevelButton;
-    [SerializeField] Button exitButton;
+    [SerializeField] public Button startButton;
+    [SerializeField] public Button settingsButton;
+    [SerializeField] public Button selectLevelButton;
+    [SerializeField] public Button exitButton;
 
     [SerializeField] private GameObject menuLevels;
     private void Start()
     {
         startButton.onClick.AddListener(StartPlay);
-        settingsButton.onClick.AddListener(SettingsLoad);
-        selectLevelButton.onClick.AddListener(OpenMenuLevels);
+        
+        if (!File.Exists($"{Path.Combine(Application.dataPath, "Json")}/LvlSettings.json"))
+        {
+            selectLevelButton.interactable = false;
+        }
+        else
+        {
+            selectLevelButton.interactable = true;
+            selectLevelButton.onClick.AddListener(OpenMenuLevels);
+        }
+        
         exitButton.onClick.AddListener(Exit);
     }
-
-    /*private void OnMouseDown()
-    {
-        startButton.onClick.AddListener(StartPlay);
-        mousPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        ray = new Ray(mousPos, -transform.forward);
-        hit = Physics2D.Raycast(mousPos, -transform.forward,10);
-        if (!hit.collider)
-        {
-            return;
-        }
-
-        if (hit.collider.CompareTag("StartPlay"))
-        {
-            StartPlay();
-        }
-        else if(hit.collider.CompareTag("Settings"))
-        {
-            SettingsLoad();
-        }
-        else if(hit.collider.CompareTag("Exit"))
-        {
-            Exit();
-        }
-    }*/
+    
 
     private void OpenMenuLevels()
     {
         menuLevels.SetActive(true);
+        gameObject.SetActive(false);
     }
     private void StartPlay()
     {
         SceneTransition.instance.SwitchToScene("lvl1");
     }
-    private void SettingsLoad()
-    {
-        SceneTransition.instance.SwitchToScene("Settings");
-    }
+
     private void Exit()
     {
         Debug.Log("exit");

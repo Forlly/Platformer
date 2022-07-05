@@ -55,5 +55,7 @@ public class GameController : MonoBehaviour
                 procedureGeneration.lvlSettings.listOfMaps[SaveSystem.LoadFile<LvlSettings>(Path.Combine(Application.dataPath, "Json"),
                     "LvlSettings.json").currentLvl - 1].mapLvl));
         }
+
+        endOfLvl.startGame = true;
     }
 }

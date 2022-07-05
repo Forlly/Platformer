@@ -11,6 +11,7 @@ public class LevelSelection : MonoBehaviour
     [SerializeField] private GameObject scrollView;
     
     [SerializeField] private Button closeView;
+    [SerializeField] public GameObject mainMenu;
     [SerializeField] private SettingsSystem settingsSystem;
 
     private List<Button> lvlsButtons;
@@ -30,7 +31,7 @@ public class LevelSelection : MonoBehaviour
         GridLayoutGroup gridLayout = content.GetComponent<GridLayoutGroup>();
         
         
-        for (int i = 1; i < lvlSettings.lvl; i++)
+        for (int i = 1; i <= lvlSettings.lvl; i++)
         {
             var i1 = i;
             Button tmp = Instantiate(lvlButton, content);
@@ -69,6 +70,7 @@ public class LevelSelection : MonoBehaviour
 
     private void CloseScrollView()
     {
+        mainMenu.SetActive(true);
         scrollView.SetActive(false);
     }
 

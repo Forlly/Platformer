@@ -1,11 +1,13 @@
 using System;
 using System.Collections;
 using System.IO;
+using Cinemachine;
 using UnityEngine;
 
 public class TransitionBetweenLevels : MonoBehaviour
 {
     private bool isTrigger = false;
+    public bool startGame = false;
 
      private void OnTriggerEnter2D(Collider2D col)
     {
@@ -56,7 +58,7 @@ public class TransitionBetweenLevels : MonoBehaviour
 
             transform.position = ProcedureGeneration.Instans.GetExitFromLvl(ProcedureGeneration.Instans.Decode(
                 ProcedureGeneration.Instans.lvlSettings.listOfMaps[lvlSettings.currentLvl - 1].mapLvl));
-            
+
         }
 
         StartCoroutine(DelayBeforeTransition());
@@ -73,8 +75,26 @@ public class TransitionBetweenLevels : MonoBehaviour
     {
         Vector3 posStartOfLvlOfLvl =  ProcedureGeneration.Instans.GetStartOfLvl(ProcedureGeneration.Instans.Decode(
             ProcedureGeneration.Instans.lvlSettings.listOfMaps[curlvl].mapLvl));
+        
         LinkStore.Instans.spawner.transform.position = posStartOfLvlOfLvl;
+
         LinkStore.Instans.spawner.MovePlayerPosToNewSpawnPoint();
-        Debug.Log("hii");
+        
+        if (startGame)
+        {
+            StartCoroutine(WaitPlayer());
+        }
+        
+
+    }
+
+    private IEnumerator WaitPlayer()
+    {
+        LinkStore.Instans.cvCamera.GetCinemachineComponent<CinemachineTransposer>().m_XDamping = 0;
+        LinkStore.Instans.cvCamera.GetCinemachineComponent<CinemachineTransposer>().m_YDamping = 0;
+
+        yield return new WaitForSeconds(0.0000001f);
+        LinkStore.Instans.cvCamera.GetCinemachineComponent<CinemachineTransposer>().m_XDamping = 1;
+        LinkStore.Instans.cvCamera.GetCinemachineComponent<CinemachineTransposer>().m_YDamping = 1;
     }
 }

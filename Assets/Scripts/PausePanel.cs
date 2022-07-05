@@ -12,12 +12,25 @@ public class PausePanel : MonoBehaviour
     [SerializeField] private GameObject pausePanel;
     [SerializeField] private SettingsSystem _settingSystem;
     private Settings _settings;
+    
+    [SerializeField] public GameObject mainMenu;
     private void Start()
     {
-        _settings = _settingSystem.Settings;
-        volumeSlider.value = _settings.volume;
-        toggleMusic.isOn = _settings.musicEnabled;
-        
+        Debug.Log(_settingSystem);
+        if (_settingSystem != null)
+        {
+            _settings = _settingSystem.Settings;
+            volumeSlider.value = _settings.volume;
+            toggleMusic.isOn = _settings.musicEnabled;
+        }
+        else
+        {
+            _settings = new Settings();
+            _settingSystem.Settings = _settings;
+            volumeSlider.value = _settings.volume;
+            toggleMusic.isOn = _settings.musicEnabled;
+        }
+
         ChangeVolume(volumeSlider.value);
         ToggleMusic(toggleMusic.isOn);
         volumeSlider.onValueChanged.AddListener(ChangeVolume);
@@ -29,6 +42,10 @@ public class PausePanel : MonoBehaviour
     private void Pause()
     {
         pausePanel.SetActive(true);
+        if (mainMenu != null)
+        {
+            mainMenu.SetActive(false);
+        }
         Time.timeScale = 0f;
     }
 
@@ -38,6 +55,10 @@ public class PausePanel : MonoBehaviour
         _settings.musicEnabled = toggleMusic.isOn;
         _settingSystem.Settings = _settings;
         pausePanel.SetActive(false);
+        if (mainMenu != null)
+        {
+            mainMenu.SetActive(true);
+        }
         Time.timeScale = 1f;
     }
 
