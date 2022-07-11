@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class InventorySystemTest : MonoBehaviour
@@ -7,11 +8,25 @@ public class InventorySystemTest : MonoBehaviour
     public List<Item> slots = new List<Item>();
     [SerializeField] private InventoryViewTest _inventoryViewTest;
 
-    void Awake()
+    void Start()
     {
+        PlayerProgress playerProgress = SaveSystem.LoadFile<PlayerProgress>(Path.Combine(Application.dataPath, "Json"),
+            "PlayerProgress.json");
+        
         for (int i = 0; i < countSlots; i++)
         {
-            slots.Add(null);
+            if (i < playerProgress.inventorySlots.Count && playerProgress != null)
+            {
+                for (int j = 0; j < LinkStore.Instans.inventoryItems.Count; j++)
+                {
+                    if (LinkStore.Instans.inventoryItems[j].ID == playerProgress.inventorySlots[i])
+                    {
+                        slots.Add(LinkStore.Instans.inventoryItems[j]);
+                    }
+                }
+            }
+            else
+                slots.Add(null);
         }
         _inventoryViewTest.GenerateSlotsView(slots);
     }

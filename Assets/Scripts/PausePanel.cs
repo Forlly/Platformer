@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
@@ -9,7 +12,13 @@ public class PausePanel : MonoBehaviour
     [SerializeField] private Toggle toggleMusic;
     [SerializeField] private Button pauseButton;
     [SerializeField] private Button continueButton;
+    [SerializeField] private Button exitToMenuButton;
     [SerializeField] private GameObject pausePanel;
+    
+    [SerializeField] private GameObject savePanel;
+    [SerializeField] private Button saveGame;
+    [SerializeField] private Button notSaveGame;
+    
     [SerializeField] private SettingsSystem _settingSystem;
     private Settings _settings;
     
@@ -31,6 +40,11 @@ public class PausePanel : MonoBehaviour
             toggleMusic.isOn = _settings.musicEnabled;
         }
 
+        if (exitToMenuButton != null)
+        {
+            exitToMenuButton.onClick.AddListener(ExitToMenu);
+        }
+        
         ChangeVolume(volumeSlider.value);
         ToggleMusic(toggleMusic.isOn);
         volumeSlider.onValueChanged.AddListener(ChangeVolume);
@@ -49,6 +63,34 @@ public class PausePanel : MonoBehaviour
         Time.timeScale = 0f;
     }
 
+    private void ExitToMenu()
+    {
+        savePanel.SetActive(true);
+        saveGame.onClick.AddListener(SaveTheGame);
+        notSaveGame.onClick.AddListener(TransitionToMenu);
+        
+    }
+
+
+    private void TransitionToMenu()
+    {
+        savePanel.SetActive(false);
+        SceneTransition.instance.SwitchToScene("Menu");
+    }
+
+    private void SaveTheGame()
+    {
+        PlayerProgress playerProgress = new PlayerProgress();
+        
+        foreach (Item item in LinkStore.Instans.InventorySystemTest.slots.Where(item => item != null))
+        {
+            playerProgress.inventorySlots.Add(item.ID);
+        }
+
+        SaveSystem.SaveFile<PlayerProgress>(playerProgress, Path.Combine(Application.dataPath, "Json"),
+            "PlayerProgress.json");
+        TransitionToMenu();
+    }
     private void ContinueGame()
     {
         _settings.volume = volumeSlider.value;
@@ -72,3 +114,4 @@ public class PausePanel : MonoBehaviour
         mixer.audioMixer.SetFloat("MasterVolume", Mathf.Lerp(-80, 0, volumeSlider.value));
     }
 }
+

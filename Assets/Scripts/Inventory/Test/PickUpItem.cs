@@ -10,7 +10,7 @@ public class PickUpItem : MonoBehaviour
 
     private void SearchInventorySystem()
     {
-        _inventorySystemTest = FindObjectOfType<InventorySystemTest>();
+        _inventorySystemTest = LinkStore.Instans.InventorySystemTest;
     }
 
     public void TakeItem()
