@@ -13,6 +13,10 @@ public class Weapon : ScriptableObject
     public float flyDistance;
     public float speed;
     public AudioSource Audio;
+
+    public int weaponClip;
+    public ChuckType chuckType;
+
 }
 
 public enum WeaponType
@@ -20,6 +24,13 @@ public enum WeaponType
     gun,
     machineGun,
     laser
+}
+
+public enum ChuckType
+{
+    none,
+    chuckGun,
+    chyckMGun
 }
 
 public enum TypeOfDamage

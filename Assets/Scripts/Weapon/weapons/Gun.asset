@@ -22,3 +22,5 @@ MonoBehaviour:
   flyDistance: 5
   speed: 5
   Audio: {fileID: 4301961414148710841, guid: 7da59cc36624e3641a4fb46f8d2a5063, type: 3}
+  weaponClip: 6
+  chuckType: 1

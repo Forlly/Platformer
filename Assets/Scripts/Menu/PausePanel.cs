@@ -65,16 +65,15 @@ public class PausePanel : MonoBehaviour
 
     private void ExitToMenu()
     {
+        Time.timeScale = 1f;
         savePanel.SetActive(true);
         saveGame.onClick.AddListener(SaveTheGame);
         notSaveGame.onClick.AddListener(TransitionToMenu);
-        
     }
 
 
     private void TransitionToMenu()
     {
-        savePanel.SetActive(false);
         SceneTransition.instance.SwitchToScene("Menu");
     }
 

@@ -1308,7 +1308,7 @@ GameObject:
   - component: {fileID: 492530366}
   - component: {fileID: 492530367}
   m_Layer: 5
-  m_Name: PauseMenu
+  m_Name: SettingsMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1352,7 +1352,11 @@ MonoBehaviour:
   toggleMusic: {fileID: 646935379}
   pauseButton: {fileID: 762695394}
   continueButton: {fileID: 427839912}
+  exitToMenuButton: {fileID: 0}
   pausePanel: {fileID: 1475553221}
+  savePanel: {fileID: 0}
+  saveGame: {fileID: 0}
+  notSaveGame: {fileID: 0}
   _settingSystem: {fileID: 685353512}
   mainMenu: {fileID: 2121903063}
 --- !u!1 &498874244
@@ -3449,8 +3453,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 960, y: 573}
+  m_AnchoredPosition: {x: 6.07, y: -1.52}
+  m_SizeDelta: {x: 1724.89, y: 915.99}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1475553223
 MonoBehaviour:
@@ -3465,7 +3469,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.100427195, g: 0.11688803, b: 0.24528301, a: 0.9372549}
+  m_Color: {r: 0.06066215, g: 0.07858138, b: 0.2264151, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4486,10 +4490,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: SceneTransitionCanvas
       objectReference: {fileID: 0}
-    - target: {fileID: 4889401291049593914, guid: b21d8e19831bb35448451ec94aeb92cc, type: 3}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 1267551667}
     - target: {fileID: 4889401291049593917, guid: b21d8e19831bb35448451ec94aeb92cc, type: 3}
       propertyPath: m_Pivot.x
       value: 0

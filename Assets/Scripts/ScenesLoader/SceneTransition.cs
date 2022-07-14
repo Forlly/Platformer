@@ -15,6 +15,12 @@ public class SceneTransition : MonoBehaviour
 
     private void Awake()
     {
+
+        if (instance != null)
+        {
+            Destroy(transform.gameObject);
+            return;
+        }
         instance = this;
         DontDestroyOnLoad(transform.root.gameObject);
     }
@@ -37,6 +43,7 @@ public class SceneTransition : MonoBehaviour
         AsyncOperation loadSceneOperation = SceneManager.LoadSceneAsync(sceneName);
         while (!loadSceneOperation.isDone)
         {
+            Debug.Log("HI");
             loadingPercent.text = Mathf.RoundToInt(loadSceneOperation.progress * 100) + "%";
             progressBar.fillAmount = loadSceneOperation.progress;
 
@@ -54,8 +61,10 @@ public class SceneTransition : MonoBehaviour
         animator.CrossFade(animName, normalizedTransitionDuration);
         float currentAnimTime = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
 
-        while (currentAnimTime < 0.9999f)
+        while (currentAnimTime < 0.99999f)
         {
+            Debug.Log("hi");
+            Debug.Log(currentAnimTime);
             yield return null;
             currentAnimTime = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
         }

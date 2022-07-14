@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 
 public class InventorySystemTest : MonoBehaviour
@@ -29,6 +31,30 @@ public class InventorySystemTest : MonoBehaviour
                 slots.Add(null);
         }
         _inventoryViewTest.GenerateSlotsView(slots);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            int i = 0;
+            WeaponController weaponController = FindObjectOfType<WeaponController>();
+            
+            foreach (Item item in slots.Where(item => item != null))
+            {
+                if (item.ID == 2 && weaponController.weapon.WeaponType == WeaponType.gun)
+                {
+                    weaponController.currentCountOfBullets = weaponController.weapon.weaponClip;
+                    DeleteItem(i);
+                }
+                else if (item.ID == 3 && weaponController.weapon.WeaponType == WeaponType.machineGun)
+                {
+                    weaponController.currentCountOfBullets = weaponController.weapon.weaponClip;
+                    DeleteItem(i);
+                }
+                i++;  
+            }
+        }
     }
 
     public bool AddItem(Item item, int id)

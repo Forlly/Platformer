@@ -491,6 +491,12 @@ MonoBehaviour:
     itemRare: 1
   - backgroundImageRare: {fileID: 21300000, guid: 3893185237368e74eab199e2a1a99651, type: 3}
     itemRare: 2
+  - backgroundImageRare: {fileID: 21300936, guid: c51d6277d6e5e86499e6eca007e73e8d, type: 3}
+    itemRare: 3
+  - backgroundImageRare: {fileID: 21300148, guid: 6effb0022735ead45acf361ef8832074, type: 3}
+    itemRare: 4
+  - backgroundImageRare: {fileID: -4469448827661530795, guid: f6d540c3d21ed2844a8c69f5c0d6d220, type: 3}
+    itemRare: 5
 --- !u!1 &340345292
 GameObject:
   m_ObjectHideFlags: 0
@@ -4176,6 +4182,8 @@ MonoBehaviour:
   inventoryItems:
   - {fileID: 11400000, guid: 8d487d33cd26b254e9c6822fe5f2c3ca, type: 2}
   - {fileID: 11400000, guid: d75c848eb9439d34aadca8ba8c2233c0, type: 2}
+  - {fileID: 11400000, guid: c50c695d5855c9843912becc07578022, type: 2}
+  - {fileID: 11400000, guid: 89a73edc64691014f9734d97f75f5352, type: 2}
   heal:
   - {fileID: 2464487967707394281, guid: 6a48875590c54e34a8dc643f2074da78, type: 3}
 --- !u!4 &1881839420

@@ -8,6 +8,8 @@ public class WeaponController : MonoBehaviour
     [SerializeField] public SpriteRenderer weaponImg;
     [SerializeField] public Bullet bullet;
     [SerializeField] public Transform spawnBulletPos;
+    [SerializeField] public int currentCountOfBullets;
+    [SerializeField] public ChuckType chuckType;
     
     public void ChangeWeapon()
     {
@@ -34,8 +36,14 @@ public class WeaponController : MonoBehaviour
         {
             if (weapon)
             {
-                weaponController.SetWeapon(weapon);
-                weaponController.Fire();
+                Debug.Log(weaponController);
+                Debug.Log(currentCountOfBullets);
+                if (currentCountOfBullets > 0)
+                {
+                    weaponController.SetWeapon(weapon);
+                    weaponController.Fire();
+                    currentCountOfBullets--;
+                }
             }
         }
     }

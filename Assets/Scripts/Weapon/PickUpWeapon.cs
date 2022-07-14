@@ -20,6 +20,8 @@ public class PickUpWeapon : MonoBehaviour
     {
         SearchGunController();
         weaponController.weapon = weapon;
+        weaponController.currentCountOfBullets = weapon.weaponClip;
+        weaponController.chuckType = weapon.chuckType;
         weaponController.weaponImg.sprite = weapon.Sprite;
         weaponController.ChangeWeapon();
         StartCoroutine(DestroyWeapon());
