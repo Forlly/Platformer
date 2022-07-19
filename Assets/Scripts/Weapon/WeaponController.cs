@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WeaponController : MonoBehaviour
 {
@@ -11,6 +12,14 @@ public class WeaponController : MonoBehaviour
     [SerializeField] public int currentCountOfBullets;
     [SerializeField] public ChuckType chuckType;
     
+    public Button fire;
+
+    private void Start()
+    {
+        fire = LinkStore.Instans.fireWeapon;
+        fire.onClick.AddListener(FireWeapon);
+    }
+
     public void ChangeWeapon()
     {
         if (weaponController != null)
@@ -34,16 +43,21 @@ public class WeaponController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            if (weapon)
+            FireWeapon();
+        }
+    }
+
+    public void FireWeapon()
+    {
+        if (weapon)
+        {
+            Debug.Log(weaponController);
+            Debug.Log(currentCountOfBullets);
+            if (currentCountOfBullets > 0 || weapon.WeaponType == WeaponType.laser)
             {
-                Debug.Log(weaponController);
-                Debug.Log(currentCountOfBullets);
-                if (currentCountOfBullets > 0)
-                {
-                    weaponController.SetWeapon(weapon);
-                    weaponController.Fire();
-                    currentCountOfBullets--;
-                }
+                weaponController.SetWeapon(weapon);
+                weaponController.Fire();
+                currentCountOfBullets--;
             }
         }
     }

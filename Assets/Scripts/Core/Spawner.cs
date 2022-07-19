@@ -17,6 +17,8 @@ public class Spawner : MonoBehaviour
         Player.GetComponentInChildren<PlayerController>().healthController = linkStore.HealthController;
         linkStore.playerLink 
             = Instantiate(Player, transformPos, Quaternion.identity).GetComponentInChildren<PlayerController>();
+        linkStore.playerLink.joystick = linkStore.joystick;
+        Debug.Log(linkStore.playerLink.joystick);
     }
     /// <summary>
     /// \brief Метод генерации персонажа в чекпоинте

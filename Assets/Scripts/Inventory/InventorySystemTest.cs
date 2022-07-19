@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventorySystemTest : MonoBehaviour
 {
@@ -10,50 +11,76 @@ public class InventorySystemTest : MonoBehaviour
     public List<Item> slots = new List<Item>();
     [SerializeField] private InventoryViewTest _inventoryViewTest;
 
+    private Button reloadWeapon;
+
     void Start()
     {
-        PlayerProgress playerProgress = SaveSystem.LoadFile<PlayerProgress>(Path.Combine(Application.dataPath, "Json"),
-            "PlayerProgress.json");
-        
-        for (int i = 0; i < countSlots; i++)
+        if ( File.Exists($"{Path.Combine(Application.dataPath, "Json")}/PlayerProgress.json"))
         {
-            if (i < playerProgress.inventorySlots.Count && playerProgress != null)
+            PlayerProgress playerProgress = SaveSystem.LoadFile<PlayerProgress>(
+                Path.Combine(Application.dataPath, "Json"),
+                "PlayerProgress.json");
+            
+            for (int i = 0; i < countSlots; i++)
             {
-                for (int j = 0; j < LinkStore.Instans.inventoryItems.Count; j++)
+                if (i < playerProgress.inventorySlots.Count && playerProgress != null)
                 {
-                    if (LinkStore.Instans.inventoryItems[j].ID == playerProgress.inventorySlots[i])
+                    for (int j = 0; j < LinkStore.Instans.inventoryItems.Count; j++)
                     {
-                        slots.Add(LinkStore.Instans.inventoryItems[j]);
+                        if (LinkStore.Instans.inventoryItems[j].ID == playerProgress.inventorySlots[i])
+                        {
+                            slots.Add(LinkStore.Instans.inventoryItems[j]);
+                        }
                     }
                 }
+                else
+                    slots.Add(null);
             }
-            else
-                slots.Add(null);
         }
+        else
+        {
+            for (int i = 0; i < countSlots; i++)
+            {
+                slots.Add(null);
+            }
+        }
+        
+        
         _inventoryViewTest.GenerateSlotsView(slots);
+
+        reloadWeapon = LinkStore.Instans.reloadWeapon;
+        reloadWeapon.onClick.AddListener(ReloadWeapon);
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            int i = 0;
-            WeaponController weaponController = FindObjectOfType<WeaponController>();
+            ReloadWeapon();
+        }
+    }
+
+    private void ReloadWeapon()
+    {
+        int i = 0;
+        WeaponController weaponController = FindObjectOfType<WeaponController>();
             
-            foreach (Item item in slots.Where(item => item != null))
+        foreach (Item item in slots)
+        {
+            if (item != null && item.ID == 2 && weaponController.weapon.WeaponType == WeaponType.gun)
             {
-                if (item.ID == 2 && weaponController.weapon.WeaponType == WeaponType.gun)
-                {
-                    weaponController.currentCountOfBullets = weaponController.weapon.weaponClip;
-                    DeleteItem(i);
-                }
-                else if (item.ID == 3 && weaponController.weapon.WeaponType == WeaponType.machineGun)
-                {
-                    weaponController.currentCountOfBullets = weaponController.weapon.weaponClip;
-                    DeleteItem(i);
-                }
-                i++;  
+                weaponController.currentCountOfBullets = weaponController.weapon.weaponClip;
+                DeleteItem(i);
+                Debug.Log(i);
             }
+            else if (item != null && item.ID == 3 && weaponController.weapon.WeaponType == WeaponType.machineGun)
+            {
+                weaponController.currentCountOfBullets = weaponController.weapon.weaponClip;
+                DeleteItem(i);
+            }
+            i++; 
+            
+            Debug.Log(item);
         }
     }
 
@@ -101,6 +128,7 @@ public class InventorySystemTest : MonoBehaviour
             {
                 slots[i] = null;
                 _inventoryViewTest.UpdateSlotsView(slots[i], i);
+                Debug.Log(slots[i]);
                 return true;
             }
         }

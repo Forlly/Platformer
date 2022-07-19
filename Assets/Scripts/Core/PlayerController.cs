@@ -21,11 +21,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public AudioSource hitSound;
     public int currentHealth;
     public int damage = 1;
+
     private bool _takesDamage = false;
     public HealthController healthController;
     [SerializeField] private float jumpForce = 5.0f;
     [SerializeField] public GameObject BottomPos;
     public float direction;
+    
+    public Joystick joystick;
 
     [Header("REFs")][Space]
     [SerializeField] private Rigidbody2D _rigidbody2D;
@@ -77,7 +80,7 @@ public class PlayerController : MonoBehaviour
     /// <returns></returns>
     private IEnumerator Run()
     {
-        while (!Input.GetButton("Horizontal"))
+        while ( !joystick || joystick.Horizontal == 0)
         {
             if (!ActiveMovement)
                 yield break;
@@ -85,10 +88,11 @@ public class PlayerController : MonoBehaviour
             yield return null;
         }
         
-        while (Input.GetButton("Horizontal"))
+        while (joystick.Horizontal !=0)
         {
-            direction = Input.GetAxis("Horizontal");
-
+            //direction = Input.GetAxis("Horizontal");
+            direction = joystick.Horizontal;
+            
             Vector2 velocityRB = _rigidbody2D.velocity;
             velocityRB.x += direction * speed;
             velocityRB.x = Math.Abs(velocityRB.x) >= maxSpeed ? maxSpeed * direction : velocityRB.x;
@@ -120,7 +124,7 @@ public class PlayerController : MonoBehaviour
     /// <returns></returns>
     private IEnumerator Jump()
     {
-        while (!Input.GetButton("Vertical") || isJumping)
+        while (!joystick || joystick.Vertical < 0.5f || isJumping)
         {
             if (!ActiveMovement)
                 yield break;

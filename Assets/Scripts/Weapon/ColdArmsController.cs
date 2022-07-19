@@ -56,20 +56,6 @@ public class ColdArmsController : MonoBehaviour, IWeaponController
         isSwing = true;
     }
 
-    /*private IEnumerator SwingWeapon()
-    {
-        WeaponController weaponController = FindObjectOfType<WeaponController>();
-        Quaternion weaponImgTransform = weaponController.weaponImg.transform.localRotation;
-        Quaternion Rotation = weaponImgTransform;
-        Rotation.z = -45;
-        weaponController.weaponImg.transform.localRotation = 
-            Quaternion.Euler(weaponImgTransform.x, weaponImgTransform.y, Rotation.z);
-        yield return new WaitForSeconds(0.1f);
-        weaponController.weaponImg.transform.localRotation 
-            = Quaternion.Euler(weaponImgTransform.x, weaponImgTransform.y, weaponImgTransform.z);;
-        isSwing = true;
-        transform.right = Vector3.right;
-    }*/
 
     public void MakeDamage(IEnemyController enemyController)
     {
